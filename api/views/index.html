@@ -36,6 +36,7 @@
             return response.json()
         }).then(data => {
             const el = document.getElementById('users-list')
+
             showUsersList(data, el)
 
         }).catch(error => {
@@ -48,14 +49,19 @@
 
                 const item = document.createElement('p');
                 item.className = "list-group-item list-group-item-action";
-                const id = document.createElement('span');
+
                 const nom = document.createElement('span');
                 const email = document.createElement('span');
-                id.innerHTML = user.id;
+
                 nom.innerHTML = user.nom;
                 email.innerHTML = user.email;
 
-                item.appendChild(id);
+                item.onclick = () => {
+                    console.log(user.id);
+                    location.user = user;
+                    console.log(location);
+                    // location.assign(`/users/update/${user.id}`)
+                }
                 item.appendChild(nom);
                 item.appendChild(email);
                 el.appendChild(item)

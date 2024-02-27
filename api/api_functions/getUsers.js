@@ -1,9 +1,13 @@
-const { pool } = require('./db');
-
+const { User } = require('../dbModels/dbInit');
 async function getUsers(req, res) {
+  //
+
   try {
-    const [rows] = await pool.query('SELECT * FROM User');
-    res.status(200).json(rows); // Use .json() for setting Content-Type to application/json
+    const users = await User.findAll({
+      attributes: ['nom', 'email'],
+    });
+
+    res.status(200).json(users);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
