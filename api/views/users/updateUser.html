@@ -53,13 +53,23 @@
         crossorigin="anonymous"></script>
     <script>
 
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('user')) {
+                const user = JSON.parse(localStorage.getItem('user'))
+                populateFormWithData(user)
 
+                localStorage.removeItem('user');
+            }
+
+        })
         document.getElementById('userRegister').addEventListener('submit', (e) => {
             e.preventDefault();
 
             const formData = new FormData(e.target)
+            const passwordGroup = document.getElementById('passGroup');
 
-            fetch('/api/register', {
+            const apiUrl = passwordGroup.className === 'd-none' ? console.log('/api/users/update/:id') : console.log('/api/register');
+            fetch(apiUrl, {
                 method: 'POST',
                 body: formData
             }).then(response => response.json()).then(data => {
@@ -69,7 +79,18 @@
             })
         })
 
+        function populateFormWithData(user) {
+            const form = document.getElementById('userRegister');
+            for (const key in user) {
 
+                const input = form.elements[key];
+                if (input) input.value = user[key];
+            }
+            const passwordGroup = document.getElementById('passGroup');
+            passwordGroup.className = 'd-none';
+            form.elements['password'].required = false
+
+        }
     </script>
 </body>
 

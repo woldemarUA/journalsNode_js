@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.get('/api/users', getUsers);
 
 app.get('/api/users/:id', getUserDetails);
-app.get('/api/users/update/:id', updateUser);
+// app.get('/api/users/update/:id', updateUser);
 app.get('/api/users/delete/:id', deleteUser);
 
 app.post('/api/register', upload.none(), registerUser);
@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 app.get('/users/add', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/users', 'addUser.html'));
 });
-app.get('/users/update/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/users', 'addUser.html'));
-});
+// app.get('/users/update/:id', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'views/users', 'addUser.html'));
+// });
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

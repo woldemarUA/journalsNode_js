@@ -4,7 +4,7 @@ async function getUsers(req, res) {
 
   try {
     const users = await User.findAll({
-      attributes: ['nom', 'email'],
+      attributes: ['nom', 'email', 'id'],
     });
 
     res.status(200).json(users);

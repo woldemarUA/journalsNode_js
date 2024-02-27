@@ -56,12 +56,12 @@
                 nom.innerHTML = user.nom;
                 email.innerHTML = user.email;
 
-                item.onclick = () => {
-                    console.log(user.id);
-                    location.user = user;
-                    console.log(location);
-                    // location.assign(`/users/update/${user.id}`)
-                }
+                // item.onclick = () => {
+
+                //     localStorage.setItem('user', JSON.stringify(user));
+
+                //     location.assign(`/users/update/${user.id}`);
+                // };
                 item.appendChild(nom);
                 item.appendChild(email);
                 el.appendChild(item)

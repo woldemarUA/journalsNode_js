@@ -1,9 +1,9 @@
 // const { sequelizeConn } = require('../api_functions/db_sequelize');
 // const { Sequelize, DataTypes } = require('sequelize');
 
-const UserModel = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
+const ArticleModel = (sequelize, DataTypes) => {
+  const Article = sequelize.define(
+    'Article',
     {
       id: {
         autoIncrement: true,
@@ -11,29 +11,35 @@ const UserModel = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      nom: {
+      author: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: 'nom',
       },
-      role: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+      },
+      title: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        defaultValue: 'Basic',
       },
-      email: {
+      description: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      password: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      image: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
       },
     },
     {
       sequelize,
-      tableName: 'User',
-      timestamps: false,
+      tableName: 'Article',
+      timestamps: true,
       indexes: [
         {
           name: 'PRIMARY',
@@ -42,16 +48,14 @@ const UserModel = (sequelize, DataTypes) => {
           fields: [{ name: 'id' }],
         },
         {
-          name: 'nom',
-          unique: true,
+          name: 'fk_user',
           using: 'BTREE',
-          fields: [{ name: 'nom' }],
+          fields: [{ name: 'userId' }],
         },
       ],
     }
   );
-
-  return User;
+  return Article;
 };
 
-module.exports = { UserModel };
+module.exports = { ArticleModel };
