@@ -1,5 +1,5 @@
 const { User } = require('../dbModels/dbInit');
-async function getUsers(req, res) {
+async function getUsers() {
   //
 
   try {
@@ -7,10 +7,10 @@ async function getUsers(req, res) {
       attributes: ['nom', 'email', 'id'],
     });
 
-    res.status(200).json(users);
+    return users;
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    throw err;
   }
 }
 

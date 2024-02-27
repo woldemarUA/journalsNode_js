@@ -1,0 +1,38 @@
+<%- include('../partials/header'); %>
+    <%- include('../partials/nav'); %>
+        <form action="/api/addArticle" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="title-sm">Titre</span>
+                        <input required name="title" type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="title-sm">
+                    </div>
+
+                </div>
+                <div class="col">
+
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" id="author-sm">Auteur</span>
+                        <input required name="author" type="text" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="author-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Description</span>
+                <textarea required name="description" class="form-control" aria-label="With textarea"></textarea>
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <input name="article-image" type="file" class="form-control" id="inputGroupFile03"
+                    aria-describedby="imageUpload" aria-label="Upload">
+                <span class="input-group-text">Image pour article</span>
+            </div>
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary btn-sm w-100" type="submit"
+                    id="article-submit">Envoyer</button>
+
+            </div>
+        </form>
+        <%- include('../partials/footer'); %>

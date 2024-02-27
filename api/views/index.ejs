@@ -1,0 +1,12 @@
+<%- include('partials/header'); %>
+    <%- include('partials/nav'); %>
+        <ul>
+            <% users.forEach(function(user) { %>
+                <li>
+                    <%= user.nom %> - <%= user.email %>
+                </li>
+                <% }); %>
+        </ul>
+        <img src="storage/titleImages/article-image-1709048089712.png" alt="" srcset="">
+
+        <%- include('partials/footer'); %>
