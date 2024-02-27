@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  api:
+    build: ./api
+    ports:
+      - '80:3001'
+    depends_on:
+      - db
+    volumes:
+      - /home/M_10_a/api:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - journalsNode
+  db:
+    image: mysql:8.0.36
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DB}
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - journalsNode
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '81:80'
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      - journalsNode
+networks:
+  journalsNode:
+volumes:
+  dbdata:
