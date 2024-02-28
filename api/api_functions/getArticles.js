@@ -2,12 +2,14 @@ const { Article } = require('../dbModels/dbInit');
 
 async function getArticles(req, res) {
   try {
-    const articles = await Article.findAll();
+    const articles = await Article.findAll({
+      order: [['createdAt', 'DESC']],
+    });
 
-    res.status(200).json(articles);
+    return articles;
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    throw err;
   }
 }
 

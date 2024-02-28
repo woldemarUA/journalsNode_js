@@ -6,6 +6,8 @@ const { getUserDetails } = require('./api_functions/getUserDetails');
 const { deleteUser } = require('./api_functions/deleteUser');
 const { registerUser } = require('./api_functions/registerUser');
 const { getArticles } = require('./api_functions/getArticles');
+const { getArticle } = require('./api_functions/getArticle');
+const { formUpload } = require('./utilities/formUpload');
 
 const PORT = 3001;
 
@@ -25,7 +27,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// Initialize multer with the storage configuration
 const upload = multer({ storage: storage });
 const app = express();
 
@@ -33,21 +34,19 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 // *****api*******
 // articles api
-app.get('/api/articles', getArticles);
-app.post('/api/addArticle', upload.single('article-image'), (req, res) => {
+app.get('/api/articles/:id', async (req, res) => {
+  const id = req.params.id * 1;
   try {
-    const { title, author, description } = req.body;
-    // const file = req.file ? req.file.path : null;
-    let image = req.file.path;
-    // str=str.slice(str.indexOf('/')+1)
-    image = image.slice(image.indexOf('/') + 1);
-    console.log(image);
-    res.send('Article and picture uploaded successfully.');
+    const article = await getArticle(id);
+    res.status(200).json(article);
   } catch (err) {
-    console.error('Error uploading article:', err);
-    res.status(500).send('Error uploading article.');
+    console.error(err);
+    res.sendStatus(500);
   }
 });
+app.get('/api/articles', getArticles);
+app.post('/api/addArticle', upload.single('article-image'), formUpload);
+app.post('/api/editArticle', upload.single('article-image'), formUpload);
 
 // USERS API
 app.get('/api/users', async (req, res) => {
@@ -69,8 +68,8 @@ app.post('/api/register', upload.none(), registerUser);
 // *****FRONT END
 app.get('/', async (req, res) => {
   try {
-    const users = await getUsers();
-    res.render('index', { users });
+    const articles = await getArticles();
+    res.render('index', { articles });
   } catch (err) {
     console.error(err);
     res.status(500).send({ err });
@@ -82,6 +81,10 @@ app.get('/users/add', (req, res) => {
 app.get('/articles/add', (req, res) => {
   res.render('articles/addArticle');
 });
+app.get('/articles/edit', (req, res) => {
+  res.render('articles/editArticle');
+});
+
 // app.get('/users/update/:id', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'views/users', 'addUser.html'));
 // });

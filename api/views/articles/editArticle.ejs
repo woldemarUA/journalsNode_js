@@ -1,6 +1,6 @@
 <%- include('../partials/header'); %>
     <%- include('../partials/nav'); %>
-        <h3>Ajout journal</h3>
+        <h3>Editer journal</h3>
         <p id="info"></p>
         <div id='info-nav' class="d-none my-1">
             <!-- d-none -->
@@ -15,7 +15,8 @@
                         <input required name="title" type="text" class="form-control" aria-label="Sizing example input"
                             aria-describedby="title-sm">
                     </div>
-
+                    <input type="text" hidden name="id">
+                    <input type="text" hidden name="userId">
                 </div>
                 <div class="col col-sm-12">
 
@@ -62,7 +63,7 @@
 
                 const formData = new FormData(e.target)
 
-                fetch('/api/addArticle?userId=2', {
+                fetch('/api/editArticle?userId=2', {
                     method: 'POST',
                     body: formData
                 }).then(response => response.json()).then(data => {
@@ -82,6 +83,7 @@
 
                     const input = formEl.elements[key];
                     if (input) input.value = !edit ? '' : val
+
                 }
             }
 

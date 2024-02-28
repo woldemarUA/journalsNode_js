@@ -7,10 +7,10 @@ async function getUserDetails(req, res) {
   try {
     const user = await User.findByPk(userId);
 
-    res.status(200).json(user);
+    return user;
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err });
+    return { error: err };
   }
 }
 

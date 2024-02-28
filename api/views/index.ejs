@@ -1,12 +1,57 @@
 <%- include('partials/header'); %>
     <%- include('partials/nav'); %>
-        <ul>
-            <% users.forEach(function(user) { %>
-                <li>
-                    <%= user.nom %> - <%= user.email %>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item ">
+                <div class="row">
+                    <div class="col-2">
+                        Image
+                    </div>
+                    <div class="col">
+                        Titre
+                    </div>
+                    <div class="col">
+                        Auteur
+                    </div>
+                    <div class="col">
+                        description
+                    </div>
+
+                </div>
+
+            </li>
+            <% articles.forEach(function(article) { %>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-2">
+                            <img src="<%= article.image %>" class="img-fluid" alt="" srcset="">
+                        </div>
+                        <div class="col">
+                            <div class="row">
+
+                                <div class="col">
+                                    <%= article.title %>
+                                </div>
+                                <div class="col">
+                                    <%= article.author %>
+                                </div>
+                                <div class="col">
+                                    <%= article.description %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <a href="/articles/edit?id=<%= article.id %>"
+                                        class="btn btn-outline-warning bn-sm">Edit</a>
+                                    <button class="btn btn-outline-danger bn-sm">Effacer</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                 </li>
                 <% }); %>
         </ul>
-        <img src="storage/titleImages/article-image-1709048089712.png" alt="" srcset="">
+
 
         <%- include('partials/footer'); %>
