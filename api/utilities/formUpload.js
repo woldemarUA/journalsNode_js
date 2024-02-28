@@ -1,7 +1,6 @@
 const { addArticle } = require('../api_functions/addArticle');
 const { updateArticle } = require('../api_functions/updateArticle');
 const formUpload = async (req, res) => {
-  console.log('13:30');
   try {
     const path = req.route.path;
     let { userId } = req.query;

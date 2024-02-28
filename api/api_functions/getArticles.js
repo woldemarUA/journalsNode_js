@@ -1,6 +1,6 @@
 const { Article } = require('../dbModels/dbInit');
 
-async function getArticles(req, res) {
+async function getArticles() {
   try {
     const articles = await Article.findAll({
       order: [['createdAt', 'DESC']],

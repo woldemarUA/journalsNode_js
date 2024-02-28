@@ -1,6 +1,3 @@
-// const { sequelizeConn } = require('../api_functions/db_sequelize');
-// const { Sequelize, DataTypes } = require('sequelize');
-
 const ArticleModel = (sequelize, DataTypes) => {
   const Article = sequelize.define(
     'Article',

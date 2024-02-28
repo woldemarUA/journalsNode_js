@@ -7,6 +7,7 @@ const { deleteUser } = require('./api_functions/deleteUser');
 const { registerUser } = require('./api_functions/registerUser');
 const { getArticles } = require('./api_functions/getArticles');
 const { getArticle } = require('./api_functions/getArticle');
+const { deleteArticle } = require('./api_functions/deleteArticle');
 const { formUpload } = require('./utilities/formUpload');
 
 const PORT = 3001;
@@ -44,8 +45,17 @@ app.get('/api/articles/:id', async (req, res) => {
     res.sendStatus(500);
   }
 });
-app.get('/api/articles', getArticles);
+app.get('/api/articles', async (req, res) => {
+  try {
+    const articles = await getArticles();
+    res.status(200).json(articles);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
 app.post('/api/addArticle', upload.single('article-image'), formUpload);
+app.get('/api/deleteArticle/:id', deleteArticle);
 app.post('/api/editArticle', upload.single('article-image'), formUpload);
 
 // USERS API
@@ -81,6 +91,9 @@ app.get('/users/add', (req, res) => {
 app.get('/articles/add', (req, res) => {
   res.render('articles/addArticle');
 });
+// app.get('/articles/:id', (req, res) => {
+//   res.render('articles/article');
+// });
 app.get('/articles/edit', (req, res) => {
   res.render('articles/editArticle');
 });

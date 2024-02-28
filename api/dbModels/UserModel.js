@@ -1,6 +1,3 @@
-// const { sequelizeConn } = require('../api_functions/db_sequelize');
-// const { Sequelize, DataTypes } = require('sequelize');
-
 const UserModel = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',

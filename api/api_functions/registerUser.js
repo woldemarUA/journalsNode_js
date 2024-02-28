@@ -8,9 +8,6 @@ async function registerUser(req, res) {
 
     const hashedPassword = await hashPassword(password);
 
-    // const query = 'INSERT INTO User (nom, email, password) VALUES (?,?,?)';
-    // const [result] = await pool.execute(query, [nom, email, hashedPassword]);
-    // console.log('User ID:', result.insertId);
     const user = await User.create({
       nom,
       email,
@@ -19,7 +16,7 @@ async function registerUser(req, res) {
     res.status(200).json({ message: 'Votre registration etait succes', user });
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    res.status(500).json({ message: err.parent.sqlMessage, error: true });
   }
 }
 
