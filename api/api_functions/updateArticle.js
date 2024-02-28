@@ -5,20 +5,18 @@ async function updateArticle(articleData) {
     console.log('serveur article edit');
     const { id, title, author, description, userId, image } = articleData;
 
-    // Directly use all articleData fields, conditionally include image only if it exists
     const updateData = {
       title,
       author,
       description,
       userId,
-      ...(image && { image }), // This will include image only if it is truthy
+      ...(image && { image }),
     };
 
     const [updatedRows] = await Article.update(updateData, {
       where: { id: id },
     });
 
-    // `updatedRows` will contain the number of rows affected by the update operation
     if (updatedRows) {
       return { message: 'Votre article a été mis à jour avec succès' };
     } else {
