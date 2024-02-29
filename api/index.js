@@ -1,16 +1,29 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
 const apiRoutes = require('./routing/api/apiRouter');
 const authRouter = require('./routing/auth/authRouter');
 const PORT = 3001;
 const app = express();
 
+const options = {
+  host: 'db',
+  port: 3306, // Default MySQL port
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DB,
+};
+
+// Create the session store
+const sessionStore = new MySQLStore(options);
+
 // start session
 app.use(
   session({
     secret: process.env.SESSION_SECRET, // Use the secret from your .env file
+    store: sessionStore, // Use MySQL session store
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -23,6 +36,8 @@ app.use(
 // start passport (auth services)
 app.use(passport.initialize());
 app.use(passport.session());
+// register my auth strategy
+require('./api_functions/passportConfig/locaStr');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
