@@ -1,9 +1,14 @@
-const { Article } = require('../dbModels/dbInit');
+const { Article, User } = require('../dbModels/dbInit');
 
 async function getArticle(id) {
   try {
-    const article = await Article.findByPk(id);
-    console.log(article);
+    const article = await Article.findByPk(id, {
+      include: {
+        model: User,
+        attributes: ['nom'],
+      },
+    });
+
     return article;
   } catch (err) {
     console.error(err);

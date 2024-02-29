@@ -2,11 +2,11 @@ const { Article } = require('../dbModels/dbInit');
 
 async function addArticle(articleData) {
   try {
-    console.log('serveur articfle obejct ');
     const { title, author, description, userId } = articleData;
     const image = articleData['image']
       ? articleData['image']
       : 'storage/default2.png';
+    // if 'storage/default2.png' changed change in deleteArtickle
     const article = await Article.create({
       title,
       author,

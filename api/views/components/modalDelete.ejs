@@ -1,0 +1,50 @@
+<div class="modal fade" id="deleteArticleModal" tabindex="-1" aria-labelledby="deleteArticleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="deleteArticleModalLabel">Êtes-vous sûr de vouloir supprimer ce
+                    journal ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="fw-bold" id="delete-message">
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-danger btn-sm" id="btn-modal-del">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById("deleteArticleModal");
+        modal.addEventListener('show.bs.modal', (e) => {
+            const button = e.relatedTarget;
+            const title = button.getAttribute('data-title');
+            const id = button.getAttribute('data-id')
+            const modalBody = document.querySelector('#delete-message');
+            modalBody.innerHTML = title;
+            const btnDel = document.getElementById('btn-modal-del');
+            btnDel.setAttribute('data-id', id)
+            btnDel.addEventListener('click', (e) => {
+                const id = btnDel.getAttribute('data-id');
+                fetch(`/api/deleteArticle/${id}`).then(res => res.json()).then(data => changeMessage(data.msg, modalBody))
+            })
+        })
+    })
+
+    function changeMessage(msg, el) {
+        el.innerHTML = msg;
+        const link = document.createElement('a');
+        link.href = '/';
+        link.innerText = 'Acceuil';
+        link.className = 'link-primary px-3'
+        el.appendChild(link);
+
+    }
+</script>

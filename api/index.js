@@ -15,7 +15,8 @@ const PORT = 3001;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let destFolder = 'public/storage/';
-    if (req.path.includes('/addArticle')) {
+    console.log(req.path);
+    if (req.path.includes('/addArticle') || req.path.includes('/editArticle')) {
       destFolder = 'public/storage/titleImages/';
     }
     cb(null, destFolder);
@@ -33,22 +34,24 @@ const app = express();
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+
 // *****api*******
 // articles api
-app.get('/api/articles/:id', async (req, res) => {
-  const id = req.params.id * 1;
+app.get('/api/articles', async (req, res) => {
   try {
-    const article = await getArticle(id);
-    res.status(200).json(article);
+    const articles = await getArticles();
+    res.status(200).json(articles);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 });
-app.get('/api/articles', async (req, res) => {
+app.get('/api/articles/:id', async (req, res) => {
+  let id = req.params.id;
+  id = parseInt(id, 10);
   try {
-    const articles = await getArticles();
-    res.status(200).json(articles);
+    const article = await getArticle(id);
+    res.status(200).json(article);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -91,9 +94,17 @@ app.get('/users/add', (req, res) => {
 app.get('/articles/add', (req, res) => {
   res.render('articles/addArticle');
 });
-// app.get('/articles/:id', (req, res) => {
-//   res.render('articles/article');
-// });
+app.get('/articles/detail/:id', async (req, res) => {
+  let id = req.params.id;
+  id = parseInt(id, 10);
+  try {
+    const article = await getArticle(id);
+    res.render('articles/article', { article });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ err });
+  }
+});
 app.get('/articles/edit', (req, res) => {
   res.render('articles/editArticle');
 });

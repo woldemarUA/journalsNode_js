@@ -23,7 +23,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-2">
-                            <img src="<%= article.image %>" class="img-fluid" alt="" srcset="">
+                            <img src="<%= article.image %>" class="img-fluid" alt="<%= article.title %>" srcset="">
                         </div>
                         <div class="col">
                             <div class="row">
@@ -40,10 +40,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-4">
-                                    <a href="/articles/edit?id=<%= article.id %>"
-                                        class="btn btn-outline-warning bn-sm">Edit</a>
-                                    <button class="btn btn-outline-danger bn-sm">Effacer</button>
-                                    <!-- <a href="" class="btn btn-outline-danger bn-sm">Voir des Details</a> -->
+                                    <a href="articles/detail/<%= article.id %>" class="btn btn-primary btn-sm">Voir des
+                                        details</a>
+                                    <%- include('./components/buttonsEditDelete', { article: article } ) %>
                                 </div>
 
                             </div>
@@ -54,5 +53,5 @@
                 <% }); %>
         </ul>
 
-
-        <%- include('partials/footer'); %>
+        <%- include('./components/modalDelete' ) %>
+            <%- include('partials/footer'); %>

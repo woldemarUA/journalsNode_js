@@ -1,0 +1,19 @@
+GET http://brigitte.bwb/api/articles/
+###
+GET http://brigitte.bwb/api/deleteArticle/35
+
+###"
+###"
+
+GET http://brigitte.bwb/api/articles/
+
+####
+
+POST http://brigitte.bwb/api/addArticle
+Content-Type: application/json
+{
+    "author": "API TEST",
+    "userId": 2,
+    "title": "MORINING JEUDI",
+    "description": "LETS TRY",
+}
