@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { upload } = require('../utilities/upload');
-const { getArticles } = require('../api_functions/getArticles');
-const { getArticle } = require('../api_functions/getArticle');
-const { deleteArticle } = require('../api_functions/deleteArticle');
-const { formUpload } = require('../utilities/formUpload');
+const { upload } = require('../../utilities/upload');
+const { getArticles } = require('../../api_functions/articles/getArticles');
+const { getArticle } = require('../../api_functions/articles/getArticle');
+const { deleteArticle } = require('../../api_functions/articles/deleteArticle');
+const { formUpload } = require('../../utilities/formUpload');
 // articles
 router.get('/', async (req, res) => {
   try {

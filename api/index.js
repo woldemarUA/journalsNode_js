@@ -1,41 +1,42 @@
+require('dotenv').config();
 const express = require('express');
-
-// const multer = require('multer');
-const apiRoutes = require('./routing/apiRouter');
-// const { getUsers } = require('./api_functions/getUsers');
-// const { getUserDetails } = require('./api_functions/getUserDetails');
-// const { deleteUser } = require('./api_functions/deleteUser');
-// const { registerUser } = require('./api_functions/registerUser');
-
-// const { deleteArticle } = require('./api_functions/deleteArticle');
-// const { formUpload } = require('./utilities/formUpload');
-
+const session = require('express-session');
+const passport = require('passport');
+const apiRoutes = require('./routing/api/apiRouter');
+const authRouter = require('./routing/auth/authRouter');
 const PORT = 3001;
 const app = express();
-app.use('/api', apiRoutes);
+
+// start session
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET, // Use the secret from your .env file
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // Set to true in production with HTTPS
+      maxAge: 1000 * 60 * 60 * 24, // Example: 24 hours
+    },
+  })
+);
+
+// start passport (auth services)
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-
-app.get('/articles/add', (req, res) => {
-  res.render('articles/addArticle');
+app.use('/api', apiRoutes);
+app.use('/auth', authRouter);
+app.get('/test-session', (req, res) => {
+  if (req.session.views) {
+    req.session.views++;
+    res.send(`Number of views: ${req.session.views}`);
+  } else {
+    req.session.views = 1;
+    res.send('Welcome to this page for the first time!');
+  }
 });
-// app.get('/articles/detail/:id', async (req, res) => {
-//   let id = req.params.id;
-//   id = parseInt(id, 10);
-//   try {
-//     const article = await getArticle(id);
-//     res.render('articles/article', { article });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send({ err });
-//   }
-// });
-app.get('/articles/edit', (req, res) => {
-  res.render('articles/editArticle');
-});
-
-// // app.get('/users/update/:id', (req, res) => {
-// //   res.sendFile(path.join(__dirname, 'views/users', 'addUser.html'));
-// // });
-
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

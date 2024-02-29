@@ -1,4 +1,4 @@
-const { User } = require('../dbModels/dbInit');
+const { User } = require('../../dbModels/dbInit');
 const { hashPassword } = require('./hashPasswords');
 
 async function registerUser(req, res) {

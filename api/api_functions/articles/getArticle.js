@@ -1,4 +1,4 @@
-const { Article, User } = require('../dbModels/dbInit');
+const { Article, User } = require('../../dbModels/dbInit');
 
 async function getArticle(id) {
   try {

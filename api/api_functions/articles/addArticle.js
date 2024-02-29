@@ -1,4 +1,4 @@
-const { Article } = require('../dbModels/dbInit');
+const { Article } = require('../../dbModels/dbInit');
 
 async function addArticle(articleData) {
   try {

@@ -1,5 +1,5 @@
-const { Article } = require('../dbModels/dbInit');
-const { deleteFile } = require('../utilities/fileDelete');
+const { Article } = require('../../dbModels/dbInit');
+const { deleteFile } = require('../../utilities/fileDelete');
 
 async function deleteArticle(req, res) {
   let id = req.params.id;

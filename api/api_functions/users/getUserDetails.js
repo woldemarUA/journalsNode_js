@@ -1,4 +1,4 @@
-const { User } = require('../dbModels/dbInit');
+const { User } = require('../../dbModels/dbInit');
 
 async function getUserDetails(req, res) {
   const userId = req.params.id * 1;

@@ -1,5 +1,5 @@
-const { addArticle } = require('../api_functions/addArticle');
-const { updateArticle } = require('../api_functions/updateArticle');
+const { addArticle } = require('../api_functions/articles/addArticle');
+const { updateArticle } = require('../api_functions/articles/updateArticle');
 const formUpload = async (req, res) => {
   try {
     const path = req.route.path;
