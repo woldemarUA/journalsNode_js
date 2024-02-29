@@ -33,7 +33,7 @@
             btnDel.setAttribute('data-id', id)
             btnDel.addEventListener('click', (e) => {
                 const id = btnDel.getAttribute('data-id');
-                fetch(`/api/deleteArticle/${id}`).then(res => res.json()).then(data => changeMessage(data.msg, modalBody))
+                fetch(`/api/delete/${id}`).then(res => res.json()).then(data => changeMessage(data.msg, modalBody))
             })
         })
     })

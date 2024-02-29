@@ -62,7 +62,7 @@
 
                 const formData = new FormData(e.target)
 
-                fetch('/api/addArticle?userId=2', {
+                fetch('/api/articles?userId=2', {
                     method: 'POST',
                     body: formData
                 }).then(response => response.json()).then(data => {

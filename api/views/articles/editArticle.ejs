@@ -63,7 +63,7 @@
 
                 const formData = new FormData(e.target)
 
-                fetch('/api/editArticle?userId=2', {
+                fetch('/api/articles/edit?userId=2', {
                     method: 'POST',
                     body: formData
                 }).then(response => response.json()).then(data => {
