@@ -1,19 +1,27 @@
 <%- include('../partials/header'); %>
     <%- include('../partials/nav'); %>
         <div class="container w-50 my-5">
-            <form action="/auth/login" method="POST">
-                <div class="input-group mb-3">
-                    <input name="nom" type="text" class="form-control" placeholder="nom d'utilisateur"
-                        aria-label="Username">
-                    <span class="input-group-text">@</span>
-                    <input name="password" type="password" class="form-control" placeholder="mot de passe"
-                        aria-label="motDePass">
-                </div>
-                <div class="input-group mb-3">
-                    <button class="btn btn-outline-secondary btn-sm w-100" type="submit" id="button-addon1">Connectez
-                        vous</button>
+            <% if (messages.message && messages.message.length> 0) { %>
+                <% messages.message.forEach(function(message) { %>
+                    <p class="text-danger">
+                        <%= message %>
+                    </p>
+                    <% }); %>
+                        <% } %>
+                            <form action="/auth/login" method="POST">
+                                <div class="input-group mb-3">
+                                    <input name="nom" type="text" class="form-control" placeholder="nom d'utilisateur"
+                                        aria-label="Username">
+                                    <span class="input-group-text">@</span>
+                                    <input name="password" type="password" class="form-control"
+                                        placeholder="mot de passe" aria-label="motDePass">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <button class="btn btn-outline-secondary btn-sm w-100" type="submit"
+                                        id="button-addon1">Connectez
+                                        vous</button>
 
-                </div>
-            </form>
+                                </div>
+                            </form>
         </div>
         <%- include('../partials/footer'); %>

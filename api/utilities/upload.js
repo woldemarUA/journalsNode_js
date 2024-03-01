@@ -4,7 +4,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     let destFolder = 'public/storage/';
     console.log(req.path);
-    if (req.path.includes('/addArticle') || req.path.includes('/editArticle')) {
+    if (req.path.includes('/addArticle') || req.path.includes('/edit')) {
       destFolder = 'public/storage/titleImages/';
     }
     cb(null, destFolder);

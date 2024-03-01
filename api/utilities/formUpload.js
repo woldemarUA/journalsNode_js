@@ -15,7 +15,7 @@ const formUpload = async (req, res) => {
     let msg = {}; // Initialize msg object to store the response from add/update operations
 
     // Check if the operation is to edit an article
-    if (path.includes('editArticle') && id) {
+    if (path.includes('edit') && id) {
       msg = await updateArticle({
         id,
         title,
@@ -43,4 +43,4 @@ const formUpload = async (req, res) => {
   }
 };
 
-module.exports = { formUpload };
+module.exports = formUpload;

@@ -5,9 +5,12 @@ const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
 const apiRoutes = require('./routing/api/apiRouter');
 const authRouter = require('./routing/auth/authRouter');
+const frontRouter = require('./routing/frontend/frontRouter');
+const flash = require('connect-flash');
 const PORT = 3001;
 const app = express();
 
+// options for database session store (used to save session data in the database)
 const options = {
   host: 'db',
   port: 3306, // Default MySQL port
@@ -33,6 +36,8 @@ app.use(
   })
 );
 
+// use in app flash messages
+app.use(flash());
 // start passport (auth services)
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,8 +48,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-app.use('/api', apiRoutes);
+// middleware to make isAuthenticated and user available globally
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.messages = req.flash();
+  next();
+});
+app.use('/', frontRouter);
 app.use('/auth', authRouter);
+app.use('/api', apiRoutes);
 app.get('/test-session', (req, res) => {
   if (req.session.views) {
     req.session.views++;

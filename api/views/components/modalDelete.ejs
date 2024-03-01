@@ -33,18 +33,22 @@
             btnDel.setAttribute('data-id', id)
             btnDel.addEventListener('click', (e) => {
                 const id = btnDel.getAttribute('data-id');
-                fetch(`/api/delete/${id}`).then(res => res.json()).then(data => changeMessage(data.msg, modalBody))
+                fetch(`/api/articles/delete/${id}`).then(res => res.json()).then(data => changeMessage(data.msg, modalBody))
             })
         })
     })
+    // 
 
     function changeMessage(msg, el) {
+        const btnContainer = document.querySelector('.modal-footer')
+        btnContainer.innerHTML = ''
         el.innerHTML = msg;
         const link = document.createElement('a');
         link.href = '/';
         link.innerText = 'Acceuil';
-        link.className = 'link-primary px-3'
-        el.appendChild(link);
+        link.className = 'btn btn-primary px-3'
+        btnContainer.appendChild(link);
+
 
     }
 </script>

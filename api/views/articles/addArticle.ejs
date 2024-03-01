@@ -1,6 +1,8 @@
 <%- include('../partials/header'); %>
     <%- include('../partials/nav'); %>
-        <h3>Ajout journal</h3>
+        <h3>
+            <%= title %>
+        </h3>
         <p id="info"></p>
         <div id='info-nav' class="d-none my-1">
             <!-- d-none -->
@@ -44,18 +46,7 @@
         </form>
 
         <script>
-            window.addEventListener("load", () => {
-                const searchParams = new URLSearchParams(window.location.search);
-                if (searchParams.has('id')) {
 
-                    const id = searchParams.get('id') * 1
-                    fetch(`/api/articles/${id}`).then(res => res.json()).then(data => {
-                        console.log(data);
-                        addFormValues(data, true);
-                    })
-                }
-
-            })
             const formEl = document.getElementById('form-article')
             formEl.addEventListener('submit', (e) => {
                 e.preventDefault();

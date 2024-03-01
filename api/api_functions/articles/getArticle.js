@@ -16,4 +16,4 @@ async function getArticle(id) {
   }
 }
 
-module.exports = { getArticle };
+module.exports = getArticle;

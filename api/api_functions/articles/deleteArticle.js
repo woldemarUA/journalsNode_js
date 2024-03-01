@@ -24,4 +24,4 @@ async function deleteArticle(req, res) {
   }
 }
 
-module.exports = { deleteArticle };
+module.exports = deleteArticle;
