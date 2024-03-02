@@ -5,6 +5,7 @@ const getArticles = require('../../api_functions/articles/getArticles');
 const getArticle = require('../../api_functions/articles/getArticle');
 const deleteArticle = require('../../api_functions/articles/deleteArticle');
 const formUpload = require('../../utilities/formUpload');
+const ensureApiAuthenticated = require('../auth/ensureAPIAuthenticated');
 // articles
 router.get('/:id', async (req, res) => {
   let id = req.params.id;
@@ -28,9 +29,21 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', upload.single('article-image'), formUpload);
-router.post('/edit', upload.single('article-image'), formUpload);
+// auth routes
 
-router.get('/delete/:id', deleteArticle);
+router.post(
+  '/',
+  ensureApiAuthenticated,
+  upload.single('article-image'),
+  formUpload
+);
+router.post(
+  '/edit',
+  ensureApiAuthenticated,
+  upload.single('article-image'),
+  formUpload
+);
+
+router.get('/delete/:id', ensureApiAuthenticated, deleteArticle);
 
 module.exports = router;

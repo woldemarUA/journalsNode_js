@@ -1,4 +1,4 @@
-<% if(isAuthenticated){ %>
+<% if(isAuthenticated && user.id===article.userId){ %>
 
     <a href="/articles/edit?id=<%= article.id %>" class="btn btn-warning btn-sm">Edit</a>
     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteArticleModal"

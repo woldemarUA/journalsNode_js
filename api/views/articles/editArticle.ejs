@@ -46,55 +46,63 @@
             </div>
         </form>
 
-        <script>
-            window.addEventListener("load", () => {
-                const searchParams = new URLSearchParams(window.location.search);
-                if (searchParams.has('id')) {
 
-                    const id = searchParams.get('id') * 1
-                    fetch(`/api/articles/${id}`).then(res => res.json()).then(data => {
-                        console.log(data);
-                        addFormValues(data, true);
-                    })
-                }
 
-            })
-            const formEl = document.getElementById('form-article')
-            formEl.addEventListener('submit', (e) => {
-                e.preventDefault();
+        <% if(isAuthenticated) { %>
+            <script>
+                let user = <%- JSON.stringify(user) %>;
+                console.log(user);
+                window.addEventListener("load", () => {
+                    const searchParams = new URLSearchParams(window.location.search);
+                    if (searchParams.has('id')) {
 
-                const formData = new FormData(e.target)
+                        const id = searchParams.get('id') * 1
+                        fetch(`/api/articles/${id}`).then(res => res.json()).then(data => {
+                            
+                            addFormValues(data, true);
+                        })
+                    }
 
-                fetch('/api/articles/edit?userId=2', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => response.json()).then(data => {
-                    console.log(data);
-                    const { message } = data;
-                    const className = data['error'] ? 'text-danger' : 'text-success';
-                    addMessage(message, className);
-                    if (data['message']) addFormValues(data['article']);
-                }).catch(error => {
-                    console.error('error : ', error);
                 })
-            })
 
-            function addFormValues(objVal, edit = false) {
-                console.log(objVal);
-                for (const [key, val] of Object.entries(objVal)) {
+                const formEl = document.getElementById('form-article')
+                formEl.addEventListener('submit', (e) => {
+                    e.preventDefault();
 
-                    const input = formEl.elements[key];
-                    if (input) input.value = !edit ? '' : val
+                    const formData = new FormData(e.target)
 
+                    fetch(`/api/articles/edit?userId=${user.id}`, {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => response.json()).then(data => {
+              
+                        const { message } = data;
+                        const className = data['error'] ? 'text-danger' : 'text-success';
+                        addMessage(message, className);
+                        if (data['message']) addFormValues(data['article']);
+                    }).catch(error => {
+                        console.error('error : ', error);
+                    })
+                })
+
+                function addFormValues(objVal, edit = false) {
+                
+                    for (const [key, val] of Object.entries(objVal)) {
+
+                        const input = formEl.elements[key];
+                        if (input) input.value = !edit ? '' : val
+
+                    }
                 }
-            }
 
-            function addMessage(msg, className) {
-                const info = document.getElementById('info');
-                const infoNav = document.getElementById('info-nav');
-                infoNav.classList.toggle('d-none');
-                info.className = className;
-                info.innerText = msg;
-            }
-        </script>
+                function addMessage(msg, className) {
+                    const info = document.getElementById('info');
+                    const infoNav = document.getElementById('info-nav');
+                    infoNav.classList.toggle('d-none');
+                    info.className = className;
+                    info.innerText = msg;
+                }
+            </script>
+
+        <% }%>
         <%- include('../partials/footer'); %>
