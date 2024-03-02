@@ -3,6 +3,8 @@
 /api/public
 .old
 /api/.env
+JWT.txt
+
 ### Node ###
 # Logs
 logs
