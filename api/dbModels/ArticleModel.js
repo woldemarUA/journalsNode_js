@@ -32,6 +32,11 @@ const ArticleModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+      isApproved: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0,
+      },
     },
     {
       sequelize,

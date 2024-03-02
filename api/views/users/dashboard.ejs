@@ -1,0 +1,145 @@
+<%- include('../partials/header'); %>
+    <%- include('../partials/nav'); %>
+
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <h5 class="bg-light text-info">Journaux publiés par vous</h5>
+        <div id="mes-journals"></div>
+
+    </div>
+    <% if(isAuthenticated && user.role==="Admin") {%> 
+        <div class="col-12 col-md-6">
+            <h5 class="bg-light text-warning">Journaux pour approbation</h5>
+            <div id="approval"class="col-12"> admin approuve /delete/edit</div>
+        </div>
+        <% } %>
+    <div id="mon-profil" class="col-12 col-md-6">Votre profil</div>
+    <div id="users-list" class="col-12 col-md-6">Liste des utilisateurs admin delete/edit</div>
+  
+</div>
+
+
+<% if(isAuthenticated) {%> 
+    <script>
+        const mesJournals = document.getElementById('mes-journals')
+        const monProfil = document.getElementById('mon-profil')
+        const userList = document.getElementById('users-list')
+        const approval = document.getElementById('approval');
+        const user = <%- JSON.stringify(user) %>
+        console.log(user);
+
+// user articles fetch
+
+fetch(`/api/articles/user/${user.id}`).then(response=>response.json()).then(data=>generateArticlesList(data, mesJournals, false))
+
+
+    //  fetch approval /api/articles/pending
+if(user.role === 'Admin'){
+  fetchApproval ();
+  
+}
+
+async function fetchApproval ()  {
+    try {
+    const response = await fetch('/api/articles/admin/pending');
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    generateArticlesList(data, approval, true);
+  } catch (error) {
+    console.error("Could not fetch approval data:", error);
+  }
+}
+
+function generateArticlesList(arr, parentEl, approval){
+    parentEl.innerHTML = '';
+    const list = document.createElement('ul');
+    parentEl.appendChild(list);
+    for (const article of arr){
+        // console.log(article);
+        const {id, image, title, author, description} = article;
+       
+        const liItem = document.createElement('li');
+        const infoRow = document.createElement('div');
+        const imgCont = document.createElement('div');
+        const img = document.createElement('img');
+        const titre = document.createElement('span');
+        const authorEl = document.createElement('span');
+        const descriptionEl = document.createElement('span');
+        const btnContainer = document.createElement('div');
+        
+        btnContainer.className = 'col'
+        list.className = 'list-group list-group-flush';
+        liItem.className = 'list-group-item';
+        infoRow.className = 'row';
+        imgCont.className = 'col-2';
+        img.className = 'img-fluid';
+        titre.className = 'col';
+        author.className = 'col';
+        description.className = 'col';
+        img.src = `/${image}`;
+        titre.innerHTML = title;
+        authorEl.innerText = author;
+        descriptionEl.innerText = description;
+        if (approval) {
+
+            const btnApprove = document.createElement('button');
+            btnApprove.className = 'btn  btn-success btn-sm';
+            btnApprove.innerText = 'approuver'
+            btnApprove.onclick = ()=>approveBtn(id);
+            btnContainer.appendChild(btnApprove);
+        }
+
+
+        const btnEdit = document.createElement('a');
+        btnEdit.className = "btn btn-warning btn-sm";
+        btnEdit.href = `/articles/edit?id=${id}`;
+        btnEdit.innerText = 'Edit';
+        btnContainer.appendChild(btnEdit);
+
+        const btnDelete = document.createElement('button');
+        btnDelete.className = 'btn btn-danger btn-sm mx-1';
+        btnDelete.setAttribute('data-bs-toggle', 'modal');
+        btnDelete.setAttribute('data-bs-target', '#deleteArticleModal');
+        btnDelete.setAttribute('data-title', title);
+        btnDelete.setAttribute('data-id', id);
+        btnDelete.innerText = 'Effacer';
+        btnContainer.appendChild(btnDelete);
+
+        imgCont.appendChild(img);   
+        infoRow.appendChild(imgCont);
+        infoRow.appendChild(titre);
+        infoRow.appendChild(authorEl);
+        infoRow.appendChild(descriptionEl);
+        infoRow.appendChild(btnContainer);
+        liItem.appendChild(infoRow);
+        list.appendChild(liItem);
+
+   }
+
+
+
+   async function approveBtn(id){
+
+    fetch(`/api/articles/admin/approve/${id}`, 
+    {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id})
+    }
+    
+    ).then(res =>res.json()).then(data=>{
+        console.log(data);
+        fetchApproval()
+    })
+   }
+}
+    </script>
+
+    <% } %>
+    <%- include('../components/modalDelete' ) %>
+    <%- include('../partials/footer'); %>

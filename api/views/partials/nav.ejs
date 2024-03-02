@@ -3,6 +3,7 @@
         <a class="nav-link" aria-current="page" href="/">Acceuil</a>
 
         <% if(isAuthenticated){ %>
+            <a class="nav-link" href="/user/dashboard">Votre espace</a>
             <a class="nav-link" href="/articles/add">Ajout Article</a>
 
             <a class="nav-link" href="/auth/logout">Deconnecter</a>
@@ -13,3 +14,9 @@
 
 
     </nav>
+    <% if(isAuthenticated){ %>
+    <div class="container bg-light p-2 border rounded">
+        <h5>Bonjour <%= user.nom %></h5>
+<h6>Votre role est <span class="text-primary"><%= user.role %></span> </h6>
+    </div>
+    <% }%>

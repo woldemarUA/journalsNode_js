@@ -4,7 +4,7 @@ const formUpload = async (req, res) => {
   try {
     const path = req.route.path;
     let { userId } = req.query;
-    const { title, author, description, id } = req.body;
+    const { title, author, description, id, isApproved } = req.body;
     userId = parseInt(userId, 10); // Ensure userId is an integer
 
     let image;
@@ -22,6 +22,7 @@ const formUpload = async (req, res) => {
         author,
         description,
         userId,
+        isApproved,
         ...(image && { image }), // Conditionally add image to the object if it exists
       });
     } else {
@@ -31,6 +32,7 @@ const formUpload = async (req, res) => {
         author,
         description,
         userId,
+        isApproved,
         ...(image && { image }), // Conditionally add image to the object if it exists
       });
     }

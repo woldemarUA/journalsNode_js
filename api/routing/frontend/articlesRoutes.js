@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const getArticles = require('../../api_functions/articles/getArticles');
+const {
+  fetchApprovedArticles,
+} = require('../../api_functions/articles/getArticles');
 const getArticle = require('../../api_functions/articles/getArticle');
 const ensureAuthenticated = require('../auth/ensureAuthenticated');
 
 router.get('/', async (req, res) => {
   try {
-    const articles = await getArticles();
+    const articles = await fetchApprovedArticles();
 
     res.render('index', { title: 'Homepage', articles });
   } catch (err) {

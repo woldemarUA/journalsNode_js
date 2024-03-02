@@ -2,7 +2,7 @@ const { Article } = require('../../dbModels/dbInit');
 
 async function addArticle(articleData) {
   try {
-    const { title, author, description, userId } = articleData;
+    const { title, author, description, userId, isApproved } = articleData;
     const image = articleData['image']
       ? articleData['image']
       : 'storage/default2.png';
@@ -13,6 +13,7 @@ async function addArticle(articleData) {
       description,
       userId,
       image,
+      isApproved,
     });
 
     return { message: 'Votre article était ajoutée avec succes', article };
