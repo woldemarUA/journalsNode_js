@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 // auth routes
 
 router.post(
-  '/',
+  '/add',
   ensureApiAuthenticated,
   upload.single('article-image'),
   formUpload

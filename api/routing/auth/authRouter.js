@@ -2,10 +2,21 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-router.get('/login', async (req, res) => {
+router.get('/register', async (req, res) => {
   res.render('auth/login', { title: 'login' });
 });
 
+router.post(
+  '/register',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/api/articles/45', // change after the tests
+    failureFlash: false, // SET TO TRUE AND CONfigure message
+  })
+);
+router.get('/login', async (req, res) => {
+  res.render('auth/login', { title: 'login' });
+});
 // Route to handle login submissions
 router.post(
   '/login',
