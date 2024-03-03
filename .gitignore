@@ -145,6 +145,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+/dbBackUp
+/dbBackUp/journals.sql
 
 ##### symfony 
 # Symfony specific

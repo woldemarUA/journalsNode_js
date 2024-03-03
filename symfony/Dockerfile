@@ -1,17 +1,23 @@
-# Utilize an official PHP image as the parent image
 FROM php:8.2-apache
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libzip-dev \
+    unzip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql intl zip
 
 # Enable Apache modules
 RUN a2enmod rewrite headers
 
-# Install system dependencies for the intl extension
-RUN apt-get update && apt-get install -y \
-        libicu-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql intl
-
+# Download and install Composer globally
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');"
 # Define working directory to /var/www/html
 WORKDIR /var/www/html
 
