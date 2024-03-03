@@ -28,6 +28,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const articles = await fetchApprovedArticles();
+
     res.status(200).json(articles);
   } catch (err) {
     console.error(err);

@@ -10,6 +10,7 @@ const apiRoutes = require('./routing/api/apiRouter');
 const authRouter = require('./routing/auth/authRouter');
 const frontRouter = require('./routing/frontend/frontRouter');
 const flash = require('connect-flash');
+const cors = require('cors');
 
 // Définir le port sur lequel le serveur va écouter
 const PORT = 3001;
@@ -43,7 +44,7 @@ app.use(
 
 // Utilisation des messages flash dans l'application
 app.use(flash());
-
+app.use(cors());
 // Initialisation de Passport (services d'authentification)
 app.use(passport.initialize());
 app.use(passport.session());
