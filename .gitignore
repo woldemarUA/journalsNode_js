@@ -151,6 +151,7 @@ dist
 /.env
 /.env.local
 /.env.*.local
+/.env.test
 /public/bundles/
 /var/
 /vendor/
