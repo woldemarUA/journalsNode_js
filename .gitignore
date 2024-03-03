@@ -144,3 +144,40 @@ dist
 
 # SvelteKit build / generate output
 .svelte-kit
+
+
+##### symfony 
+# Symfony specific
+/.env
+/.env.local
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+!/var/cache/.gitkeep
+!/var/log/.gitkeep
+/bin/.phpunit.result.cache
+
+# Development environment files
+/.idea/
+/.vscode/
+/nbproject/
+/.DS_Store
+/Thumbs.db
+
+# Node modules (if using frontend tooling like Webpack Encore)
+/node_modules/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Composer files
+/composer.phar
+/composer.lock
+
+# PHPUnit
+/phpunit.xml
+
