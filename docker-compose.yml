@@ -1,5 +1,20 @@
 version: '3.8'
 services:
+  symfony:
+    build: ./symfony
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+    volumes:
+      - /home/M_10_a/symfony:/var/www/html/
+    environment:
+      - MYSQL_DB=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DB}
+    networks:
+      - journalsNode
   api:
     build: ./api
     ports:
