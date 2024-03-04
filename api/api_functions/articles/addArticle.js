@@ -5,7 +5,7 @@ const { Article } = require('../../dbModels/dbInit');
 async function addArticle(articleData) {
   try {
     // Extraire les données de l'article depuis l'argument articleData
-    const { title, author, description, userId, isApproved } = articleData;
+    const { title, author, description, userId, is_approved } = articleData;
     // Utiliser une image par défaut si aucune image n'est fournie
     const image = articleData['image']
       ? articleData['image']
@@ -19,7 +19,7 @@ async function addArticle(articleData) {
       description,
       userId,
       image,
-      isApproved,
+      is_approved,
     });
 
     // Retourner un message de succès et l'article ajouté

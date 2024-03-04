@@ -29,13 +29,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     image: {
       type: DataTypes.STRING(255),
-      allowNull: true,
-      defaultValue: "storage\/default2.png"
+      allowNull: true
     },
-    isApproved: {
+    is_approved: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: 0
+      allowNull: false
     }
   }, {
     sequelize,
@@ -51,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "fk_user",
+        name: "IDX_23A0E6664B64DCC",
         using: "BTREE",
         fields: [
           { name: "userId" },

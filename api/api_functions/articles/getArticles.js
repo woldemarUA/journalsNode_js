@@ -5,8 +5,8 @@ const { Article, User } = require('../../dbModels/dbInit');
 async function fetchApprovedArticles() {
   try {
     const articles = await Article.findAll({
-      order: [['createdAt', 'DESC']], // Trier les articles par date de création, du plus récent au plus ancien
-      where: { isApproved: true }, // Condition pour filtrer uniquement les articles approuvés
+      order: [['created_at', 'DESC']], // Trier les articles par date de création, du plus récent au plus ancien
+      where: { is_approved: true }, // Condition pour filtrer uniquement les articles approuvés
       include: {
         model: User, // Inclure les informations de l'utilisateur associé à chaque article
         attributes: ['nom'], // Sélectionner uniquement le nom de l'utilisateur
@@ -24,7 +24,7 @@ async function fetchApprovedArticles() {
 async function fetchPendingApprovalArticles() {
   try {
     const articles = await Article.findAll({
-      where: { isApproved: false }, // Condition pour filtrer uniquement les articles non approuvés
+      where: { is_approved: false }, // Condition pour filtrer uniquement les articles non approuvés
       include: {
         model: User, // Inclure les informations de l'utilisateur associé
         attributes: ['nom'], // Sélectionner uniquement le nom de l'utilisateur
@@ -42,7 +42,7 @@ async function fetchPendingApprovalArticles() {
 async function changeStatus(id) {
   try {
     const msg = await Article.update(
-      { isApproved: true }, // Mettre à jour le statut d'approbation à vrai (approuvé)
+      { is_approved: true }, // Mettre à jour le statut d'approbation à vrai (approuvé)
       {
         where: { id: id }, // Identifier l'article à mettre à jour par son identifiant
       }

@@ -56,7 +56,7 @@
                     e.preventDefault();
 
                     const formData = new FormData(e.target)
-                    if(user.role === 'Admin') formData.append('isApproved', true);
+                    if(user.role === 'Admin') formData.append('is_approved', true);
                     fetch(`/api/articles/add?userId=${user.id}`, {
                         method: 'POST',
                         body: formData

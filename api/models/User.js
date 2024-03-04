@@ -10,15 +10,14 @@ module.exports = function(sequelize, DataTypes) {
     nom: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: "nom"
+      unique: "UNIQ_8D93D6496C6E55B5"
     },
     role: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      defaultValue: "Basic"
+      allowNull: false
     },
     email: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     password: {
@@ -39,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "nom",
+        name: "UNIQ_8D93D6496C6E55B5",
         unique: true,
         using: "BTREE",
         fields: [

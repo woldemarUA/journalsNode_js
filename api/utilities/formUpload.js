@@ -7,10 +7,11 @@ const formUpload = async (req, res) => {
   try {
     // Récupérer le chemin de la route pour déterminer l'action (ajouter ou éditer)
     const path = req.route.path;
-
+    console.log('form upload');
+    console.log(req.body);
     // Extraire l'userId de la query et les autres informations du corps de la requête
     let { userId } = req.query;
-    const { title, author, description, id, isApproved } = req.body;
+    const { title, author, description, id, is_approved } = req.body;
 
     // Assurer que userId est un entier
     userId = parseInt(userId, 10);
@@ -31,7 +32,7 @@ const formUpload = async (req, res) => {
         author,
         description,
         userId,
-        isApproved,
+        is_approved,
         ...(image && { image }), // Ajouter conditionnellement l'image à l'objet si elle existe
       });
     } else {
@@ -41,7 +42,7 @@ const formUpload = async (req, res) => {
         author,
         description,
         userId,
-        isApproved,
+        is_approved,
         ...(image && { image }), // Ajouter conditionnellement l'image à l'objet si elle existe
       });
     }
