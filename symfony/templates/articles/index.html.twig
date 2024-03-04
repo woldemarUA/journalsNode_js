@@ -3,21 +3,66 @@
 {% block title %}Hello ArticlesController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item ">
+        <div class="row">
+            <div class="col-2">
+                Image
+            </div>
+            <div class="col">
+                Titre
+            </div>
+            <div class="col">
+                Auteur
+            </div>
+            <div class="col">
+                description
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/html/src/Controller/ArticlesController.php</code></li>
-        <li>Your template at <code>/var/www/html/templates/articles/index.html.twig</code></li>
-    </ul>
+    </li>
+{% for article in articles %}
+
+<li class="list-group-item">
+    <div class="row">
+        <div class="col-2">
+            
+            <img src="http://brigitte.bwb/{{article.image}}" class="img-fluid" alt="{{article.title}}" srcset="">
+        </div>
+        <div class="col">
+            <div class="row">
+
+                <div class="col">
+                    {{article.title}}
+                </div>
+                <div class="col">
+                    {{article.author}}
+                </div>
+                <div class="col">
+                    {{article.description}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <a href="#" class="btn btn-primary btn-sm">Voir des
+                        details</a>
+                    <!-- <%- include('./components/buttonsEditDelete', { article: article } ) %> -->
+                </div>
+
+            </div>
+
+        </div>
+
+</li>
+<div>
+   
+   
+    
+    
 </div>
-
+{% endfor %}
+</ul>
 <script>
     fetch('http://brigitte.bwb/api/articles/').then(res=>res.json()).then(data=>console.log(data))
 </script>
