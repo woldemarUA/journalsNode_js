@@ -19,3 +19,16 @@ Content-Type: application/json
     "description": "LETS TRY"
 }
 
+###
+
+POST /api/articles/deleteImage HTTP/1.1
+Host: brigitte.bwb
+Content-Type: application/json
+
+{
+    "author": "API TEST",
+    "userId": 2,
+    "title": "MORNING JEUDI",
+    "description": "LETS TRY"
+}
+

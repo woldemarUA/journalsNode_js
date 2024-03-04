@@ -34,6 +34,8 @@ class Article2Type extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'label' => 'Upload file',
+                'mapped' => false,
+                'required' => false,
                 // This is not needed for HTML5 compliant browsers
                 'attr' => [
                     'accept' => 'image/*',

@@ -37,7 +37,7 @@ class Article
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+    private ?string $image = 'storage/default2.png';
 
 
     #[ORM\Column(nullable: true)]

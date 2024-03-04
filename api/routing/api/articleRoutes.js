@@ -12,11 +12,11 @@ const deleteArticle = require('../../api_functions/articles/deleteArticle');
 const formUpload = require('../../utilities/formUpload');
 const ensureApiAuthenticated = require('../auth/ensureAPIAuthenticated');
 const extractId = require('../../utilities/extractId');
+const { deleteFile } = require('../../utilities/fileDelete');
 
 router.post('/upload', upload.single('article-image'), (req, res) => {
   let image;
-  console.log('hello from upload');
-  console.log(req.file);
+
   // Si un fichier est téléchargé, extraire le chemin de l'image
   try {
     if (req.file) {
@@ -27,6 +27,14 @@ router.post('/upload', upload.single('article-image'), (req, res) => {
     console.error(err);
     res.sendStatus(500);
   }
+});
+
+router.post('/deleteImage', (req, res) => {
+  const file = req.body.filePath;
+  console.log('Hello from delete file');
+  console.log(file);
+  if (!file.includes('default')) deleteFile(file);
+  res.status(200).json({ file });
 });
 
 // articles
