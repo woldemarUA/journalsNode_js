@@ -14,7 +14,7 @@ async function deleteArticle(req, res) {
     const image = await Article.findByPk(id, {
       attributes: ['image'],
     });
-    console.log('TROUVER IMAGE *********');
+
     // Si l'image n'est pas une image par défaut, supprimer le fichier de l'image
     if (!image['image'].includes('default')) deleteFile(image['image']);
 

@@ -7,8 +7,7 @@ const formUpload = async (req, res) => {
   try {
     // Récupérer le chemin de la route pour déterminer l'action (ajouter ou éditer)
     const path = req.route.path;
-    console.log('form upload');
-    console.log(req.body);
+
     // Extraire l'userId de la query et les autres informations du corps de la requête
     let { userId } = req.query;
     const { title, author, description, id, is_approved } = req.body;

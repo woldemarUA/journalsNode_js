@@ -18,14 +18,13 @@ class Article1Type extends AbstractType
             ->add('title')
             ->add('description')
             ->add('image')
-            ->add('isApproved')
-            ->add('createdAt')
-            ->add('updatedAt')
+            // ->add('isApproved')
+            // ->add('createdAt')
+            // ->add('updatedAt')
             ->add('userId', EntityType::class, [
                 'class' => User::class,
-'choice_label' => 'id',
-            ])
-        ;
+                'choice_label' => 'id',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

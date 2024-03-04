@@ -13,6 +13,22 @@ const formUpload = require('../../utilities/formUpload');
 const ensureApiAuthenticated = require('../auth/ensureAPIAuthenticated');
 const extractId = require('../../utilities/extractId');
 
+router.post('/upload', upload.single('article-image'), (req, res) => {
+  let image;
+  console.log('hello from upload');
+  console.log(req.file);
+  // Si un fichier est téléchargé, extraire le chemin de l'image
+  try {
+    if (req.file) {
+      image = req.file.path.slice(req.file.path.indexOf('/') + 1);
+    }
+    res.status(200).json({ image });
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 // articles
 router.get('/:id', async (req, res) => {
   const id = extractId(req);

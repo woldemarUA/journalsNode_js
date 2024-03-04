@@ -8,11 +8,14 @@ GET http://brigitte.bwb/api/articles/
 
 ####
 
-POST http://brigitte.bwb/api/addArticle
+POST /api/articles/upload HTTP/1.1
+Host: brigitte.bwb
 Content-Type: application/json
+
 {
     "author": "API TEST",
     "userId": 2,
-    "title": "MORINING JEUDI",
-    "description": "LETS TRY",
+    "title": "MORNING JEUDI",
+    "description": "LETS TRY"
 }
+
