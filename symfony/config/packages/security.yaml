@@ -28,7 +28,7 @@ security:
       logout:
         path: app_logout
         # where to redirect after logout
-        # target: app_any_route
+        target: app_article_index
     #   provider: users_in_memory
 
     # activate different ways to authenticate

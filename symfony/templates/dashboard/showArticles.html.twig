@@ -1,0 +1,59 @@
+
+<ul class="list-group list-group-flush">
+
+    <li class="list-group-item ">
+        <div class="row">
+            <div class="col-2">
+                Image
+            </div>
+            <div class="col">
+                Titre
+            </div>
+            <div class="col">
+                Auteur
+            </div>
+            <div class="col">
+                description
+            </div>
+
+        </div>
+{% for article in articles %}
+
+<li class="list-group-item">
+    <div class="row">
+        <div class="col-2">
+            <img src="http://brigitte.bwb/{{article.image}}" class="img-fluid" alt="{{article.title}}" srcset="">
+        </div>
+        <div class="col">
+            <div class="row">
+
+                <div class="col">
+                  {{ article.title }}
+                </div>
+                <div class="col">
+                   {{ article.author }}
+                </div>
+                <div class="col">
+                   {{ article.description }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-primary btn-sm my-1">Voir des
+                        details</a>
+                        {% if approve %}
+                        <form action="{{ path('app_article_approve', {'id': article.id}) }}" method="post">
+                            <input type="hidden" name="_token" value="{{ csrf_token('approve-article' ~ article.id) }}">
+                            <button type="submit" class="btn btn-success btn-sm my-1">Approuver</button>
+                        </form>
+                        {% endif %}
+                        
+                </div>
+
+            </div>
+
+        </div>
+
+</li>
+{% endfor %}
+</ul>

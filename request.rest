@@ -1,4 +1,4 @@
-GET http://brigitte.bwb/api/articles/59
+GET http://brigitte.bwb/api/articles/
 ###
 GET http://brigitte.bwb/api/articles/delete/58
 ###"

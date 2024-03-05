@@ -43,10 +43,11 @@ class Article2Type extends AbstractType
                 ],
             ])
 
-            ->add('userId', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ]);
+            // ->add('userId', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
