@@ -5,37 +5,49 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
+// Déclaration de l'entité User et du repository associé
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    // Déclaration des propriétés de l'entité User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = null; // Identifiant unique de l'utilisateur
 
-    #[ORM\Column(length: 255, unique: true)]
-    private ?string $nom = null;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $nom = null; // Nom de l'utilisateur, unique
+
+    // Champ 'role' de l'ancienne entité User1, pour la compatibilité arrière
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $role = 'Basic'; // Rôle de l'utilisateur (pour compatibilité)
 
     #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    private ?string $email = null; // Adresse email de l'utilisateur
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    // Liste des rôles de l'utilisateur
+    #[ORM\Column]
+    private array $roles = []; // Rôles de l'utilisateur sous forme de tableau
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $password = null;
+    #[ORM\Column]
+    private ?string $password = null; // Mot de passe hashé de l'utilisateur
 
+    // Collection d'articles associés à l'utilisateur
     #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'userId')]
-    private Collection $articles;
+    private Collection $articles; // Articles écrits par l'utilisateur
 
+    // Constructeur de l'entité User
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->roles = [];
     }
 
+    // Getters et setters des propriétés
     public function getId(): ?int
     {
         return $this->id;
@@ -46,10 +58,9 @@ class User
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -58,10 +69,9 @@ class User
         return $this->role;
     }
 
-    public function setRole(string $role): static
+    public function setRole(?string $role): self
     {
         $this->role = $role;
-
         return $this;
     }
 
@@ -70,25 +80,49 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->nom;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // Garantir que chaque utilisateur a au moins le rôle ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Si des données temporaires sensibles sont stockées sur l'utilisateur, les effacer ici
+        // $this->plainPassword = null;
+    }
+
+    // Gestion de la collection d'articles de l'utilisateur
     /**
      * @return Collection<int, Article>
      */
@@ -97,25 +131,23 @@ class User
         return $this->articles;
     }
 
-    public function addArticle(Article $article): static
+    public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
             $this->articles->add($article);
             $article->setUserId($this);
         }
-
         return $this;
     }
 
-    public function removeArticle(Article $article): static
+    public function removeArticle(Article $article): self
     {
         if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
+            // Définir le côté propriétaire sur null (sauf si déjà changé)
             if ($article->getUserId() === $this) {
                 $article->setUserId(null);
             }
         }
-
         return $this;
     }
 }
