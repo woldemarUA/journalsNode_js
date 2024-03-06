@@ -10,20 +10,27 @@ router.post(
   '/register',
   passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/api/articles/45', // change after the tests
-    failureFlash: false, // SET TO TRUE AND CONfigure message
+    failureRedirect: '/auth/register', // change after the tests
+    failureFlash: true, // SET TO TRUE AND CONfigure message
   })
 );
 router.get('/login', async (req, res) => {
-  res.render('auth/login', { title: 'login' });
+  const messages = req.flash('error');
+  console.log('***********************LOGIN *******************');
+  console.log(messages);
+  res.render('auth/login', {
+    title: 'login',
+    // messages: messages,
+    // hasErrors: messages.length > 0,
+  });
 });
 // Route to handle login submissions
 router.post(
   '/login',
   passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/api/articles/45', // change after the tests
-    failureFlash: false, // SET TO TRUE AND CONfigure message
+    failureRedirect: '/auth/login',
+    failureFlash: true,
   })
 );
 

@@ -33,7 +33,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     is_approved: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,
@@ -49,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "IDX_23A0E6664B64DCC",
+        name: "IDX_CD8737FA64B64DCC",
         using: "BTREE",
         fields: [
           { name: "userId" },

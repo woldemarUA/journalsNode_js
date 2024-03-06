@@ -11,10 +11,11 @@ const UserModel = (sequelize, DataTypes) => {
         allowNull: false, // Non nul
         primaryKey: true, // Clé primaire
       },
+
       nom: {
-        type: DataTypes.STRING(255), // Chaîne de caractères, maximum 255
-        allowNull: false, // Non nul
-        unique: 'nom', // Nom unique
+        type: DataTypes.STRING(180),
+        allowNull: false,
+        unique: 'UNIQ_2DA179776C6E55B5',
       },
       role: {
         type: DataTypes.STRING(255), // Chaîne de caractères, maximum 255
@@ -25,29 +26,33 @@ const UserModel = (sequelize, DataTypes) => {
         type: DataTypes.TEXT, // Texte long
         allowNull: false, // Non nul
       },
+
       password: {
-        type: DataTypes.TEXT, // Texte long
-        allowNull: false, // Non nul
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      roles: {
+        type: DataTypes.JSON,
+        allowNull: false,
       },
     },
+
     {
-      // Options supplémentaires du modèle
-      sequelize, // Instance de connexion Sequelize
-      tableName: 'User', // Nom de la table
-      timestamps: false, // Désactiver les timestamps (createdAt, updatedAt)
+      sequelize,
+      tableName: 'User',
+      timestamps: false,
       indexes: [
-        // Définition des index
         {
-          name: 'PRIMARY', // Index primaire
-          unique: true, // Unique
-          using: 'BTREE', // Utilisation d'un B-Tree
-          fields: [{ name: 'id' }], // Sur le champ 'id'
+          name: 'PRIMARY',
+          unique: true,
+          using: 'BTREE',
+          fields: [{ name: 'id' }],
         },
         {
-          name: 'nom', // Index sur le nom
-          unique: true, // Unique
-          using: 'BTREE', // Utilisation d'un B-Tree
-          fields: [{ name: 'nom' }], // Sur le champ 'nom'
+          name: 'UNIQ_2DA179776C6E55B5',
+          unique: true,
+          using: 'BTREE',
+          fields: [{ name: 'nom' }],
         },
       ],
     }

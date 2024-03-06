@@ -8,20 +8,25 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     nom: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(180),
       allowNull: false,
-      unique: "UNIQ_8D93D6496C6E55B5"
+      unique: "UNIQ_2DA179776C6E55B5"
     },
     role: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true,
+      defaultValue: "Basic"
     },
     email: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
     password: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    roles: {
+      type: DataTypes.JSON,
       allowNull: false
     }
   }, {
@@ -38,7 +43,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "UNIQ_8D93D6496C6E55B5",
+        name: "UNIQ_2DA179776C6E55B5",
         unique: true,
         using: "BTREE",
         fields: [
