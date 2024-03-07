@@ -1,0 +1,36 @@
+
+####
+GET http://brigitte.bwb/api/articles/
+###
+GET http://brigitte.bwb/api/articles/delete/103
+###"
+###"
+
+GET http://brigitte.bwb/api/articles/
+
+####
+
+POST /api/articles/upload HTTP/1.1
+Host: brigitte.bwb
+Content-Type: application/json
+
+{
+    "author": "API TEST",
+    "userId": 2,
+    "title": "MORNING JEUDI",
+    "description": "LETS TRY"
+}
+
+###
+
+POST /api/articles/deleteImage HTTP/1.1
+Host: brigitte.bwb
+Content-Type: application/json
+
+{
+    "author": "API TEST",
+    "userId": 2,
+    "title": "MORNING JEUDI",
+    "description": "LETS TRY"
+}
+

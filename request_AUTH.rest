@@ -1,0 +1,52 @@
+###
+POST /auth/login HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+    "username": "prerOK",
+    "password": "321"
+}
+####
+
+###
+POST /auth/register HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+    "username": "frenchMan2",
+    "password": "userpassword",
+    "email":"another@email.route"
+}
+####
+
+GET /auth/users HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
+####
+
+GET /auth/users/17 HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
+####
+
+DELETE /auth/users/17 HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
+####
+
+PATCH /auth/users/update/16 HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+  
+    "username": "prerOK456",
+    "email":"drufddfdfdfder@email.route",
+    "password":"321"
+}
+####

@@ -97,22 +97,32 @@ router.patch('/users/update/:userId', async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    const wasUpdated = await updateUser({ userId, username, email, password });
+    // Appeler updateUser et attendre sa réponse
+    const updateResponse = await updateUser({
+      userId,
+      username,
+      email,
+      password,
+    });
 
-    if (!wasUpdated) {
-      return res
-        .status(404)
-        .json({ message: "L'utilisateur n'a pas été trouvé." });
+    // Vérifier la propriété success de la réponse
+    if (!updateResponse.success) {
+      // Si success est faux, utiliser le message de la réponse pour le statut d'erreur
+      // Cela pourrait être un 404 si aucun utilisateur n'a été trouvé, ou un 400 s'il y avait un doublon de nom d'utilisateur, etc.
+      // Ici, vous pourriez décider du code de statut en fonction du message ou ajouter plus de logique pour différencier
+      return res.status(400).json({ message: updateResponse.message });
     }
 
+    // Si success est vrai, procéder à l'envoi de la réponse de succès
     res
       .status(200)
       .json({ message: "L'utilisateur a été mis à jour avec succès." });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "Erreur lors de la mise à jour de l'utilisateur." });
+    res.status(500).json({
+      message: "Erreur lors de la mise à jour de l'utilisateur.",
+      error, // Utilisation du raccourci ES6 pour error: error
+    });
   }
 });
 
