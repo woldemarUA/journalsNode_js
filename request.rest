@@ -4,8 +4,8 @@ Host: brigitte.bwb:3000
 Content-Type: application/json
 
 {
-    "username": "woldemar",
-    "password": "userpassword"
+    "username": "prewoldemarOK",
+    "password": "321"
 }
 ####
 
@@ -15,7 +15,7 @@ Host: brigitte.bwb:3000
 Content-Type: application/json
 
 {
-    "username": "prewoldemarOK",
+    "username": "frenchMan",
     "password": "userpassword",
     "email":"another@email.route"
 }
@@ -27,15 +27,28 @@ Host: brigitte.bwb:3000
 ####
 ####
 
-GET /auth/users/9 HTTP/1.1
+GET /auth/users/13 HTTP/1.1
 Host: brigitte.bwb:3000
 
 ####
 ####
 
-put /auth/users/9 HTTP/1.1
+DELETE /auth/users/13 HTTP/1.1
 Host: brigitte.bwb:3000
 
+####
+####
+
+PATCH /auth/users/update/12 HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+  
+    "username": "prerOK",
+    "email":"puper@email.route",
+    "password":"321"
+}
 ####
 GET http://brigitte.bwb/api/articles/
 ###

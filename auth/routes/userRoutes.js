@@ -1,14 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const express = require('express'); // Importation du module express pour créer le serveur
+const router = express.Router(); // Création d'un nouveau routeur express
+const passport = require('passport'); // Importation de Passport pour l'authentification
+const jwt = require('jsonwebtoken'); // Importation de jsonwebtoken pour la gestion des tokens JWT
 
-const register = require('../functions/registerUser');
-const getAllUsers = require('../functions/getAllUsers');
-const getUserById = require('../functions/getUserById');
-const deleteUser = require('../functions/deleteUser');
-const updateUser = require('../functions/updateUser');
-const extractId = require('../utilities/extractId');
+const register = require('../functions/registerUser'); // Fonction pour enregistrer un nouvel utilisateur
+const getAllUsers = require('../functions/getAllUsers'); // Fonction pour récupérer tous les utilisateurs
+const getUserById = require('../functions/getUserById'); // Fonction pour récupérer un utilisateur par son ID
+const deleteUser = require('../functions/deleteUser'); // Fonction pour supprimer un utilisateur
+const updateUser = require('../functions/updateUser'); // Fonction pour mettre à jour un utilisateur
+const extractId = require('../utilities/extractId'); // Fonction utilitaire pour extraire l'ID de l'utilisateur depuis la requête
 
 router.post('/register', async (req, res) => {
   try {
@@ -34,7 +34,12 @@ router.post('/login', (req, res, next) => {
         return res.status(401).json({ message: info.message });
       }
       // generation JWT token
-      const userPayload = { id: user.id, email: user.email, role: user.role };
+      const userPayload = {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        username: user.username,
+      };
       const token = jwt.sign(userPayload, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRATION_TIME,
       });
@@ -77,8 +82,8 @@ router.delete('/users/:id', async (req, res) => {
   try {
     const id = extractId(req);
 
-    const user = await deleteUser(id);
-    res.status(200).json({ message: 'Utilisateur etait effacé', user });
+    const msg = await deleteUser(id);
+    res.status(200).json({ message: msg });
   } catch (err) {
     console.error(err);
     res
@@ -86,16 +91,28 @@ router.delete('/users/:id', async (req, res) => {
       .json({ message: 'Internal Server Error', error: err.message });
   }
 });
-router.put('/users/:id', async (req, res) => {
+
+router.patch('/users/update/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const { username, email, password } = req.body;
+
   try {
-    const id = extractId(req);
-    const user = await updateUser(id);
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
+    const wasUpdated = await updateUser({ userId, username, email, password });
+
+    if (!wasUpdated) {
+      return res
+        .status(404)
+        .json({ message: "L'utilisateur n'a pas été trouvé." });
+    }
+
+    res
+      .status(200)
+      .json({ message: "L'utilisateur a été mis à jour avec succès." });
+  } catch (error) {
+    console.error(error);
     res
       .status(500)
-      .json({ message: 'Internal Server Error', error: err.message });
+      .json({ message: "Erreur lors de la mise à jour de l'utilisateur." });
   }
 });
 
@@ -109,24 +126,24 @@ router.post('/logout', async (req, res) => {
     res.sendStatus(500);
   }
 });
-router.post('/token', async (req, res) => {
-  try {
-    const msg = req.body;
-    console.log(msg);
-    res.status(200).json(msg);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
-router.post('/verify', async (req, res) => {
-  try {
-    const msg = req.body;
-    console.log(msg);
-    res.status(200).json(msg);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
+// router.post('/token', async (req, res) => {
+//   try {
+//     const msg = req.body;
+//     console.log(msg);
+//     res.status(200).json(msg);
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
+// router.post('/verify', async (req, res) => {
+//   try {
+//     const msg = req.body;
+//     console.log(msg);
+//     res.status(200).json(msg);
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
 module.exports = router;
