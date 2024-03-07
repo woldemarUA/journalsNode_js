@@ -3,6 +3,7 @@
 /api/public
 .old
 /api/.env
+/auth/.env
 JWT.txt
 TASKS
 ### Node ###

@@ -31,8 +31,7 @@ router.post('/upload', upload.single('article-image'), (req, res) => {
 
 router.post('/deleteImage', (req, res) => {
   const file = req.body.filePath;
-  console.log('Hello from delete file');
-  console.log(file);
+
   if (!file.includes('default')) deleteFile(file);
   res.status(200).json({ file });
 });

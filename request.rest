@@ -1,6 +1,45 @@
+###
+POST /auth/login HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+    "username": "woldemar",
+    "password": "userpassword"
+}
+####
+
+###
+POST /auth/register HTTP/1.1
+Host: brigitte.bwb:3000
+Content-Type: application/json
+
+{
+    "username": "prewoldemarOK",
+    "password": "userpassword",
+    "email":"another@email.route"
+}
+####
+
+GET /auth/users HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
+####
+
+GET /auth/users/9 HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
+####
+
+put /auth/users/9 HTTP/1.1
+Host: brigitte.bwb:3000
+
+####
 GET http://brigitte.bwb/api/articles/
 ###
-GET http://brigitte.bwb/api/articles/delete/58
+GET http://brigitte.bwb/api/articles/delete/103
 ###"
 ###"
 

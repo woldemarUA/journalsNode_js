@@ -16,8 +16,7 @@ router.post(
 );
 router.get('/login', async (req, res) => {
   const messages = req.flash('error');
-  console.log('***********************LOGIN *******************');
-  console.log(messages);
+
   res.render('auth/login', {
     title: 'login',
     // messages: messages,
