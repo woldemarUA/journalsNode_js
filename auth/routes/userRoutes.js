@@ -13,6 +13,7 @@ const extractId = require('../utilities/extractId'); // Fonction utilitaire pour
 router.post('/register', async (req, res) => {
   try {
     const userData = req.body;
+
     const msg = await register(userData);
     res.status(200).json(msg);
   } catch (err) {
@@ -95,7 +96,7 @@ router.delete('/users/:id', async (req, res) => {
 router.patch('/users/update/:userId', async (req, res) => {
   const { userId } = req.params;
   const { username, email, password } = req.body;
-
+  console.log(userId, username, email, password);
   try {
     // Appeler updateUser et attendre sa réponse
     const updateResponse = await updateUser({

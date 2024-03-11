@@ -13,7 +13,7 @@ async function register(userData) {
     };
 
     const result = await pool.query(query);
-    // console.log(result.rows);
+
     return result.rows[0];
   } catch (err) {
     console.error(err);

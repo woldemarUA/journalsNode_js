@@ -12,28 +12,15 @@ services:
       - ./nginx/ssl/tymchenko.fr_ssl_certificate.cer:/etc/ssl/certs/tymchenko.fr_ssl_certificate.cer:ro
       - ./nginx/ssl/_.tymchenko.fr_private_key.key:/etc/ssl/private/_.tymchenko.fr_private_key.key:ro
       - ./nginx/web:/usr/share/nginx/html:ro
+
     depends_on:
-      # - symfony
       - api
       - phpmyadmin
       - auth
       - pgadmin
     networks:
       - journalsNode
-  # symfony:
-  #   build: ./symfony
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - /home/M_10_a/symfony:/var/www/html/
-  #   environment:
-  #     - MYSQL_DB=${MYSQL_DB}
-  #     - MYSQL_USER=${MYSQL_USER}
-  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-  #     - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DB}
-  #     - APP_BASE_URL=/symfony
-  #   networks:
-  #     - journalsNode
+
   api:
     build: ./api
     depends_on:

@@ -1,6 +1,6 @@
 ###
 POST /auth/login HTTP/1.1
-Host: https://tymchenko.fr/auth/
+Host: https://tymchenko.fr/
 Content-Type: application/json
 
 {
