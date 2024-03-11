@@ -1,3 +1,0 @@
-<IfModule mod_headers.c>
-    RequestHeader set X-Forwarded-Prefix "/symfony"
-</IfModule>
