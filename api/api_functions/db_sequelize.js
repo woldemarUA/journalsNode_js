@@ -5,6 +5,7 @@ const { Sequelize } = require('sequelize');
 const sequelizeConn = new Sequelize(
   process.env.MYSQL_DB, // Nom de la base de données
   process.env.MYSQL_USER, // Utilisateur de la base de données
+  // 'root',
   process.env.MYSQL_PASSWORD, // Mot de passe de l'utilisateur
   {
     host: 'db', // Hôte de la base de données
@@ -17,6 +18,17 @@ const sequelizeConn = new Sequelize(
     },
   }
 );
+
+// async function testDatabaseConnection() {
+//   try {
+//     await sequelizeConn.authenticate();
+//     console.log('Connection has been established successfully.');
+//   } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+//   }
+// }
+
+// testDatabaseConnection();
 
 // Exporter la connexion sequelize pour l'utiliser dans d'autres parties de l'application
 module.exports = { sequelizeConn };

@@ -1,6 +1,6 @@
 ###
 POST /auth/login HTTP/1.1
-Host: brigitte.bwb:3000
+Host: https://tymchenko.fr/auth/
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 POST /auth/register HTTP/1.1
-Host: brigitte.bwb:3000
+Host: https://tymchenko.fr/auth/
 Content-Type: application/json
 
 {
@@ -22,25 +22,25 @@ Content-Type: application/json
 ####
 
 GET /auth/users HTTP/1.1
-Host: brigitte.bwb:3000
+Host: https://tymchenko.fr/auth/
 
 ####
 ####
 
 GET /auth/users/17 HTTP/1.1
-Host: brigitte.bwb:3000
+Host: https://tymchenko.fr/auth/
 
 ####
 ####
 
 DELETE /auth/users/17 HTTP/1.1
-Host: brigitte.bwb:3000
+Host: localhost:3000
 
 ####
 ####
 
 PATCH /auth/users/update/16 HTTP/1.1
-Host: brigitte.bwb:3000
+Host: localhost:3000
 Content-Type: application/json
 
 {

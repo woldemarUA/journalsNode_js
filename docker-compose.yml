@@ -1,24 +1,41 @@
 version: '3.8'
 services:
-  symfony:
-    build: ./symfony
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
-      - '8080:80'
-    depends_on:
-      - db
+      - '80:80'
+      - '443:443'
     volumes:
-      - /home/M_10_a/symfony:/var/www/html/
-    environment:
-      - MYSQL_DB=${MYSQL_DB}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DB}
+      - ./nginx/conf:/etc/nginx/conf.d:ro
+      - ./nginx/ssl/tymchenko.fr_ssl_certificate.cer:/etc/ssl/certs/tymchenko.fr_ssl_certificate.cer:ro
+      - ./nginx/ssl/_.tymchenko.fr_private_key.key:/etc/ssl/private/_.tymchenko.fr_private_key.key:ro
+      - ./nginx/web:/usr/share/nginx/html:ro
+    depends_on:
+      # - symfony
+      - api
+      - phpmyadmin
+      - auth
+      - pgadmin
     networks:
       - journalsNode
+  # symfony:
+  #   build: ./symfony
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - /home/M_10_a/symfony:/var/www/html/
+  #   environment:
+  #     - MYSQL_DB=${MYSQL_DB}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #     - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/${MYSQL_DB}
+  #     - APP_BASE_URL=/symfony
+  #   networks:
+  #     - journalsNode
   api:
     build: ./api
-    ports:
-      - '80:3001'
     depends_on:
       - db
     volumes:
@@ -42,17 +59,14 @@ services:
       - journalsNode
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    ports:
-      - '81:80'
     environment:
       - PMA_HOST=db
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - PMA_ABSOLUTE_URI=https://tymchenko.fr/phpmyadmin/
     networks:
       - journalsNode
   auth:
     build: ./auth
-    ports:
-      - '3000:3000'
     depends_on:
       - auth_db
     volumes:
@@ -78,14 +92,14 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    ports:
-      - '5050:80'
     depends_on:
       - auth_db
     networks:
       - journalsNode
 networks:
   journalsNode:
+    name: journalsNode
+    driver: bridge
 volumes:
   dbdata:
   pgdata:
