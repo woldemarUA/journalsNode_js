@@ -1,20 +1,14 @@
 <%- include('../partials/header'); %>
     <%- include('../partials/nav'); %>
         <div class="container w-50 my-5">
-            <% if (messages.message && messages.message.length> 0) { %>
-                <% messages.message.forEach(function(message) { %>
-                    <p class="text-danger">
-                        <%= message %>
-                    </p>
-                    <% }); %>
-                        <% } %>
-                            <form action="/auth/login" method="POST">
+         <div id="info"></div>
+                            <form id="login" action="" method="POST">
                                 <div class="input-group mb-3">
-                                    <input name="nom" type="text" class="form-control" placeholder="nom d'utilisateur"
-                                        aria-label="Username">
+                                    <input id="username" name="username" type="text" class="form-control" placeholder="nom d'utilisateur"
+                                        aria-label="Username" autocomplete="off">
                                     <span class="input-group-text">@</span>
-                                    <input name="password" type="password" class="form-control"
-                                        placeholder="mot de passe" aria-label="motDePass">
+                                    <input id="password" name="password" type="password" class="form-control"
+                                        placeholder="mot de passe" aria-label="motDePass" autocomplete="off">
                                 </div>
                                 <div class="input-group mb-3">
                                     <button class="btn btn-outline-secondary btn-sm w-100" type="submit"
@@ -24,4 +18,27 @@
                                 </div>
                             </form>
         </div>
+
+        <script>
+            document.getElementById('login').addEventListener('submit', (e)=>{
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                fetch('/auth/login',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }, body: JSON.stringify({
+                         username, password
+                    })
+                } ).then(response=>response.json()).then(data=>{
+                    if(data.token){
+                        console.log('youare logged in');
+                    }else {
+                        console.log(data);
+                    }
+                })
+            })
+        </script>
         <%- include('../partials/footer'); %>

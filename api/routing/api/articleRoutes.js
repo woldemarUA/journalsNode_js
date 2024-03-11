@@ -14,6 +14,11 @@ const ensureApiAuthenticated = require('../auth/ensureAPIAuthenticated');
 const extractId = require('../../utilities/extractId');
 const { deleteFile } = require('../../utilities/fileDelete');
 
+// // In your apiRoutes or wherever you define your routes
+// app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   res.json({ message: 'Success! You can access protected routes.' });
+// });
+
 router.post('/upload', upload.single('article-image'), (req, res) => {
   let image;
 
@@ -29,7 +34,7 @@ router.post('/upload', upload.single('article-image'), (req, res) => {
   }
 });
 
-router.post('/deleteImage', (req, res) => {
+router.delete('/deleteImage', (req, res) => {
   const file = req.body.filePath;
 
   if (!file.includes('default')) deleteFile(file);
@@ -62,19 +67,19 @@ router.get('/', async (req, res) => {
 // auth routes
 
 router.post(
-  '/add',
+  '/',
   ensureApiAuthenticated,
   upload.single('article-image'),
   formUpload
 );
-router.post(
-  '/edit',
+router.patch(
+  '/:id',
   ensureApiAuthenticated,
   upload.single('article-image'),
   formUpload
 );
 
-router.get('/delete/:id', ensureApiAuthenticated, deleteArticle);
+router.delete('/:id', ensureApiAuthenticated, deleteArticle);
 
 // admin
 router.get('/admin/pending', ensureApiAuthenticated, async (req, res) => {
