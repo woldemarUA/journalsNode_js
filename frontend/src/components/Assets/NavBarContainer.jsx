@@ -1,12 +1,12 @@
 import React from 'react';
-import ListItem from './ListItem';
+import NavBarItem from './NavBarItem';
 
-export const ListContainer = ({ style, items }) => {
+export const NavBarContainer = ({ style, items }) => {
   return (
     <ul className={style.className}>
       {items.map((item, index) => {
         return (
-          <ListItem
+          <NavBarItem
             key={index}
             href={item.href}
             text={item.text}

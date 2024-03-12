@@ -11,9 +11,8 @@ export default function ArticleItem({ article }) {
         <div className='col-2'>
           <img
             src={image}
-            alt=''
-            srcset=''
             className='img-fluid rounded'
+            alt={title}
           />
         </div>
         <div className='col'>{author}</div>

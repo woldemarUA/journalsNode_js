@@ -44,7 +44,7 @@ router.post('/login', (req, res, next) => {
       const token = jwt.sign(userPayload, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRATION_TIME,
       });
-      res.json({ token, userPayload });
+      res.json({ token });
     }
   )(req, res, next);
 });
