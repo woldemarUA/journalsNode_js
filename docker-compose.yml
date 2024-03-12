@@ -18,9 +18,17 @@ services:
       - phpmyadmin
       - auth
       - pgadmin
+      # - frontend
     networks:
       - journalsNode
-
+  # frontend:
+  #   build: ./frontend
+  #   volumes:
+  #     - /home/M_10_a/frontend:/usr/src/app
+  #   environment:
+  #     - PUBLIC_URL=/frontend
+  #   networks:
+  #     - journalsNode
   api:
     build: ./api
     depends_on:
