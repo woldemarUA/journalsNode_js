@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { ListGroup, Row, Col, Spinner, Alert } from 'react-bootstrap';
 
 import { fetchArticles } from '../../apiCalls/fetchArticles';
 import ArticleItem from './ArticleItem';
+
 export default function ArticlesList() {
   const [articles, setArticles] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,29 +25,40 @@ export default function ArticlesList() {
     loadData();
   }, []);
 
-  if (loading) return <div>Loading</div>;
-  if (error) return <div>Error {error.message}</div>;
+  if (loading)
+    return (
+      <Spinner
+        animation='border'
+        role='status'
+      >
+        <span className='visually-hidden'>Loading...</span>
+      </Spinner>
+    );
+  if (error) return <Alert variant='danger'>Error: {error.message}</Alert>;
+
   return (
-    <ul className='list-group list-group-flush my-2'>
-      <li className='list-group-item'>
-        <div className='row'>
-          <div className='col-2'>Image</div>
-          <div className='col'>Auteur</div>
-          <div className='col'>Titre</div>
-          <div className='col'>Description</div>
-          <div className='col'>Cree par</div>
-          <div className='col'>Cree a</div>
-          <div className='col'>Editee a</div>
-        </div>
-      </li>
-      {articles.map((article, index) => {
-        return (
+    <ListGroup
+      className='my-2'
+      variant='flush'
+    >
+      <ListGroup.Item>
+        <Row>
+          <Col xs={2}>Image</Col>
+          <Col>Auteur</Col>
+          <Col>Titre</Col>
+          <Col>Description</Col>
+          <Col>Créé par</Col>
+          <Col>Créé à</Col>
+          <Col>Édité à</Col>
+        </Row>
+      </ListGroup.Item>
+      {articles &&
+        articles.map((article, index) => (
           <ArticleItem
             key={index}
             article={article}
           />
-        );
-      })}
-    </ul>
+        ))}
+    </ListGroup>
   );
 }

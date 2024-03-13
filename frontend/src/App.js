@@ -1,19 +1,18 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-// Bootstrap CSS
+import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// Bootstrap Bundle JS
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import NavBar from './components/Navbar/NavBar';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
-import { LoginPage, RegisterPage } from './components/Auth/AuthPages';
+import { AuthPage } from './components/Auth/AuthPage';
 import DashboardPage from './components/Dashboard/DashboardPage';
 import ArticlesList from './components/Articles/ArticlesList';
+import ArticleDetail from './components/Articles/ArticleDetail';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className='container'>
+      <Container>
         <NavBar />
         <Routes>
           <Route
@@ -22,11 +21,15 @@ function App() {
           />
           <Route
             path='/login'
-            element={<LoginPage />}
+            element={<AuthPage formType={'login'} />}
           />
           <Route
             path='/register'
-            element={<RegisterPage />}
+            element={<AuthPage formType={'register'} />}
+          />
+          <Route
+            path='/details'
+            element={<ArticleDetail />}
           />
           <Route
             path='/dashboard'
@@ -37,7 +40,7 @@ function App() {
             }
           />
         </Routes>
-      </div>
+      </Container>
     </BrowserRouter>
   );
 }

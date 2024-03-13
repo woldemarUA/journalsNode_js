@@ -1,54 +1,67 @@
 import React from 'react';
+import { Form, Button, FloatingLabel } from 'react-bootstrap';
 
-export const AuthForm = ({ formType, onSubmit }) => {
-  const isRegister = formType === 'register';
+export const AuthForm = ({ formType, onSubmit, onChange, formData }) => {
+  const isRegister = formType === 'register'; // Détermine si le formulaire est pour l'inscription
   return (
-    <form
-      className=' m-2'
+    <Form
+      className='m-2'
       onSubmit={onSubmit}
     >
-      <div className='form-floating my-1'>
-        <input
+      <FloatingLabel
+        controlId='username'
+        label='Votre nom utilisateur'
+        className='my-1'
+      >
+        <Form.Control
           type='text'
-          className='form-control'
           name='username'
-          id='username'
+          value={formData.username} // Composant contrôlé
+          onChange={onChange} // Mettre à jour l'état lors du changement
           autoComplete='new-password'
           required
         />
-        <label htmlFor='username'>Votre nom d'utilisateur</label>
-      </div>
+      </FloatingLabel>
+
       {isRegister && (
-        <div className='form-floating my-1'>
-          <input
+        <FloatingLabel
+          controlId='email'
+          label='Votre email'
+          className='my-1'
+        >
+          <Form.Control
             type='email'
-            className='form-control'
             name='email'
-            id='email'
+            value={formData.email} // Composant contrôlé
+            onChange={onChange} // Mettre à jour l'état lors du changement
             required
             autoComplete='new-password'
           />
-          <label htmlFor='email'>Votre email</label>
-        </div>
+        </FloatingLabel>
       )}
 
-      <div className='form-floating my-1'>
-        <input
+      <FloatingLabel
+        controlId='password'
+        label='Votre mot de passe'
+        className='my-1'
+      >
+        <Form.Control
           type='password'
-          className='form-control'
           name='password'
-          id='password'
+          value={formData.password} // Composant contrôlé
+          onChange={onChange} // Mettre à jour l'état lors du changement
           autoComplete='new-password'
           required
         />
-        <label htmlFor='password'>Votre mot de pass</label>
-      </div>
-      <div className='form-floating my-1'>
-        <input
-          type='submit'
-          className='btn btn-outline-secondary btn-sm'
-        />
-      </div>
-    </form>
+      </FloatingLabel>
+
+      <Button
+        variant='outline-secondary'
+        type='submit'
+        className='my-1 btn-sm'
+      >
+        Submit
+      </Button>
+    </Form>
   );
 };

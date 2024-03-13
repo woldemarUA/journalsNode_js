@@ -1,76 +1,54 @@
-import React, { Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavBar() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-      <div className='container-fluid'>
-        <Link
-          className='navbar-brand'
-          to='/'
-        >
-          Acueil
-        </Link>
-        <button
-          className='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarNav'
-          aria-controls='navbarNav'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
-          <span className='navbar-toggler-icon'></span>
-        </button>
-        <div className='collapse navbar-collapse'>
-          <ul className='navbar-nav'>
+    <Navbar
+      bg='light'
+      expand='lg'
+    >
+      <Container fluid>
+        <LinkContainer to='/'>
+          <Navbar.Brand>Accueil</Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls='navbarResponsive' />
+        <Navbar.Collapse id='navbarResponsive'>
+          <Nav className='me-auto'>
             {token ? (
-              <Fragment>
-                <li className='nav-item'>
-                  <Link
-                    to='/dashboard'
-                    className='nav-link active'
-                  >
-                    Espace personnelle
-                  </Link>
-                </li>
-                <li className='nav-item'>
-                  <button
-                    className='nav-link active'
-                    onClick={() => {
-                      localStorage.removeItem('token');
-                      navigate('/');
-                    }}
-                  >
-                    Deconnecter
-                  </button>
-                </li>
-              </Fragment>
+              <>
+                <LinkContainer to='/dashboard'>
+                  <Nav.Link>Espace personnelle</Nav.Link>
+                </LinkContainer>
+                <Button
+                  variant='light'
+                  onClick={handleLogout}
+                >
+                  Déconnecter
+                </Button>
+              </>
             ) : (
-              <Fragment>
-                <li className='nav-item'>
-                  <Link
-                    to='/login'
-                    className='nav-link active'
-                  >
-                    Se connecter
-                  </Link>
-                </li>
-                <li className='nav-item'>
-                  <Link
-                    to='/register'
-                    className='nav-link active'
-                  >
-                    S'abonner
-                  </Link>
-                </li>
-              </Fragment>
+              <>
+                <LinkContainer to='/login'>
+                  <Nav.Link>Se connecter</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/register'>
+                  <Nav.Link>S'abonner</Nav.Link>
+                </LinkContainer>
+              </>
             )}
-          </ul>
-        </div>
-      </div>
-    </nav>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
