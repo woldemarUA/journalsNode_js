@@ -12,8 +12,6 @@ function initModels(sequelize) {
   var messenger_messages = _messenger_messages(sequelize, DataTypes);
   var sessions = _sessions(sequelize, DataTypes);
 
-  Article.belongsTo(User, { as: "user", foreignKey: "userId"});
-  User.hasMany(Article, { as: "Articles", foreignKey: "userId"});
 
   return {
     Article,

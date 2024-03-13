@@ -1,4 +1,5 @@
 // Importer multer pour la gestion des téléchargements de fichiers
+const { log } = require('console');
 const multer = require('multer');
 // Importer le module path pour manipuler les chemins de fichiers
 const path = require('path');
@@ -8,17 +9,16 @@ const storage = multer.diskStorage({
   // Définir la destination du fichier téléchargé
   destination: function (req, file, cb) {
     // Dossier de destination par défaut pour les fichiers téléchargés
-    let destFolder = 'public/storage/';
+    let destFolder = 'public/storage/titleImages/';
     // Vérifier le chemin de la requête pour ajuster le dossier de destination
-    console.log('uploade new article');
-    console.log(req.path);
-    if (
-      req.path.includes('/add') ||
-      req.path.includes('/edit') ||
-      req.path.includes('/upload')
-    ) {
-      destFolder = 'public/storage/titleImages/';
-    }
+    // console.log('destination before if');
+    // if (
+    //   req.path.includes('/add') ||
+    //   req.path.includes('/edit') ||
+    //   req.path.includes('/upload')
+    // ) {
+    //   destFolder = 'public/storage/titleImages/';
+    // }
     // Appeler le callback avec le dossier de destination sélectionné
     cb(null, destFolder);
   },

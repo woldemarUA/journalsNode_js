@@ -1,11 +1,18 @@
 import React from 'react';
 import { Row, Col, Image, ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { dateConvert } from '../../utils/dateConversion';
 
+import { dateConvert } from '../../utils/dateConversion';
+import ArticleManagementButtons from '../Assets/ArticleManagementButtons';
 export default function ArticleItem({ article }) {
-  const { image, author, title, description, created_at, updated_at, User } =
-    article;
+  const {
+    image,
+    author,
+    title,
+    description,
+    created_at,
+    updated_at,
+    username,
+  } = article;
 
   return (
     <ListGroup.Item>
@@ -21,16 +28,11 @@ export default function ArticleItem({ article }) {
         <Col>{author}</Col>
         <Col>{title}</Col>
         <Col>{description}</Col>
-        <Col>{User.nom}</Col>
+        <Col>{username}</Col>
         <Col>{dateConvert(created_at)}</Col>
         <Col>{dateConvert(updated_at)}</Col>
         <Col>
-          <Link
-            to='/details'
-            state={article}
-          >
-            Details
-          </Link>
+          <ArticleManagementButtons article={article} />
         </Col>
       </Row>
     </ListGroup.Item>

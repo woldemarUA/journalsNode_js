@@ -25,8 +25,9 @@ require('./api_functions/passportConfig/passpordConfig');
 // Middleware pour analyser le corps des requêtes et servir des fichiers statiques
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
+// app.use(express.static('public'));
+app.use('/public/storage', express.static('public/storage'));
+// public/storage/
 // Définition du moteur de rendu des vues
 app.set('view engine', 'ejs');
 

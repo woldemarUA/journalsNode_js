@@ -5,11 +5,12 @@ const { Article } = require('../../dbModels/dbInit');
 async function addArticle(articleData) {
   try {
     // Extraire les données de l'article depuis l'argument articleData
-    const { title, author, description, userId, is_approved } = articleData;
+    const { title, author, description, userId, username, is_approved } =
+      articleData;
     // Utiliser une image par défaut si aucune image n'est fournie
     const image = articleData['image']
       ? articleData['image']
-      : 'storage/default2.png';
+      : `${process.env.IMAGE_UPLOAD_PATH}/default2.png`;
     // Attention : si 'storage/default2.png' est modifié, le changer également dans deleteArticle
 
     // Créer un nouvel article dans la base de données avec les données fournies
@@ -18,6 +19,7 @@ async function addArticle(articleData) {
       author,
       description,
       userId,
+      username,
       image,
       is_approved,
     });

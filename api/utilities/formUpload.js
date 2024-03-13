@@ -9,16 +9,21 @@ const formUpload = async (req, res) => {
     const path = req.route.path;
 
     // Extraire l'userId de la query et les autres informations du corps de la requête
-    let { userId } = req.query;
-    const { title, author, description, id, is_approved } = req.body;
 
+    const { title, author, description, id, is_approved, userId, username } =
+      req.body;
+    console.log('reqbody', req.body);
+    console.log(`username  ${username}`);
     // Assurer que userId est un entier
-    userId = parseInt(userId, 10);
+    // userId = parseInt(userId, 10);
 
     let image;
     // Si un fichier est téléchargé, extraire le chemin de l'image
     if (req.file) {
-      image = req.file.path.slice(req.file.path.indexOf('/') + 1);
+      console.log(req.file.filename);
+      const baseURI = process.env.IMAGE_UPLOAD_PATH;
+      image =
+        process.env.IMAGE_UPLOAD_PATH + '/titleImages/' + req.file.filename;
     }
 
     let msg = {}; // Initialiser l'objet msg pour stocker la réponse des opérations d'ajout/mise à jour
@@ -31,16 +36,19 @@ const formUpload = async (req, res) => {
         author,
         description,
         userId,
+        username,
         is_approved,
         ...(image && { image }), // Ajouter conditionnellement l'image à l'objet si elle existe
       });
     } else {
       // Ajouter un nouvel article
+      console.log('from add article before adding to the db', username);
       msg = await addArticle({
         title,
         author,
         description,
         userId,
+        username,
         is_approved,
         ...(image && { image }), // Ajouter conditionnellement l'image à l'objet si elle existe
       });

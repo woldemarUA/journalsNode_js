@@ -3,13 +3,15 @@ const { Article } = require('../../dbModels/dbInit');
 async function updateArticle(articleData) {
   try {
     console.log('serveur article edit');
-    const { id, title, author, description, userId, image } = articleData;
+    const { id, title, author, description, userId, username, image } =
+      articleData;
 
     const updateData = {
       title,
       author,
       description,
       userId,
+      username,
       ...(image && { image }),
     };
 

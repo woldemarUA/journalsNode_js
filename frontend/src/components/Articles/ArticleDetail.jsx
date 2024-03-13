@@ -7,8 +7,15 @@ import { dateConvert } from '../../utils/dateConversion';
 const ArticleDetail = () => {
   const location = useLocation();
   const article = location.state;
-  const { image, author, title, description, created_at, updated_at, User } =
-    article;
+  const {
+    image,
+    author,
+    title,
+    description,
+    created_at,
+    updated_at,
+    username,
+  } = article;
   return (
     <Card>
       <Card.Header as='h5'>{title}</Card.Header>
@@ -21,7 +28,7 @@ const ArticleDetail = () => {
 
         <Card.Text>{description}</Card.Text>
         <Row>
-          <Col>Cree par {User.nom}: </Col>
+          <Col>Cree par {username}: </Col>
           <Col> {dateConvert(created_at)}</Col>
           <Col>modifie:{dateConvert(updated_at)}</Col>
         </Row>

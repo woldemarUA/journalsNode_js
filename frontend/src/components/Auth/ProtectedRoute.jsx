@@ -5,10 +5,12 @@ function ProtectedRoute({ children }) {
   const token = localStorage.getItem('token');
 
   if (!token)
-    <Navigate
-      to='/login'
-      replace
-    />;
+    return (
+      <Navigate
+        to='/login'
+        replace
+      />
+    );
 
   return children;
 }

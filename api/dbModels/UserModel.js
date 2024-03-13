@@ -2,57 +2,55 @@
 const UserModel = (sequelize, DataTypes) => {
   // Créer et retourner le modèle 'User' avec sa structure
   const User = sequelize.define(
-    'User', // Nom du modèle
+    'Article',
     {
-      // Définition des attributs du modèle
       id: {
-        autoIncrement: true, // Incrémentation automatique
-        type: DataTypes.INTEGER, // Type entier
-        allowNull: false, // Non nul
-        primaryKey: true, // Clé primaire
-      },
-
-      nom: {
-        type: DataTypes.STRING(180),
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: 'UNIQ_2DA179776C6E55B5',
+        primaryKey: true,
       },
-      role: {
-        type: DataTypes.STRING(255), // Chaîne de caractères, maximum 255
-        allowNull: false, // Non nul
-        defaultValue: 'Basic', // Valeur par défaut 'Basic'
-      },
-      email: {
-        type: DataTypes.TEXT, // Texte long
-        allowNull: false, // Non nul
-      },
-
-      password: {
+      username: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      roles: {
-        type: DataTypes.JSON,
+      author: {
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      title: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      image: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue: 'https://tymchenko.fr/images/default2.png',
+      },
+      is_approved: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: 0,
+      },
     },
-
     {
       sequelize,
-      tableName: 'User',
-      timestamps: false,
+      tableName: 'Article',
+      timestamps: true,
       indexes: [
         {
           name: 'PRIMARY',
           unique: true,
           using: 'BTREE',
           fields: [{ name: 'id' }],
-        },
-        {
-          name: 'UNIQ_2DA179776C6E55B5',
-          unique: true,
-          using: 'BTREE',
-          fields: [{ name: 'nom' }],
         },
       ],
     }

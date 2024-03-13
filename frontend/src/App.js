@@ -8,6 +8,7 @@ import { AuthPage } from './components/Auth/AuthPage';
 import DashboardPage from './components/Dashboard/DashboardPage';
 import ArticlesList from './components/Articles/ArticlesList';
 import ArticleDetail from './components/Articles/ArticleDetail';
+import ArticleManagement from './components/Articles/ArticleManagement';
 
 function App() {
   return (
@@ -30,6 +31,22 @@ function App() {
           <Route
             path='/details'
             element={<ArticleDetail />}
+          />
+          <Route
+            path='/add'
+            element={
+              <ProtectedRoute>
+                <ArticleManagement formType={'add'} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/edit'
+            element={
+              <ProtectedRoute>
+                <ArticleManagement formType={'edit'} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/dashboard'

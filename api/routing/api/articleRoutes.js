@@ -19,20 +19,20 @@ const { deleteFile } = require('../../utilities/fileDelete');
 //   res.json({ message: 'Success! You can access protected routes.' });
 // });
 
-router.post('/upload', upload.single('article-image'), (req, res) => {
-  let image;
+// router.post('/upload', upload.single('article-image'), (req, res) => {
+//   let image;
 
-  // Si un fichier est téléchargé, extraire le chemin de l'image
-  try {
-    if (req.file) {
-      image = req.file.path.slice(req.file.path.indexOf('/') + 1);
-    }
-    res.status(200).json({ image });
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
-  }
-});
+//   // Si un fichier est téléchargé, extraire le chemin de l'image
+//   try {
+//     if (req.file) {
+//       image = req.file.path.slice(req.file.path.indexOf('/') + 1);
+//     }
+//     res.status(200).json({ image });
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(500);
+//   }
+// });
 
 router.delete('/deleteImage', (req, res) => {
   const file = req.body.filePath;
@@ -68,14 +68,14 @@ router.get('/', async (req, res) => {
 
 router.post(
   '/',
-  ensureApiAuthenticated,
-  upload.single('article-image'),
+  // ensureApiAuthenticated,
+  upload.single('imageArticle'),
   formUpload
 );
 router.patch(
   '/:id',
   ensureApiAuthenticated,
-  upload.single('article-image'),
+  upload.single('imageArticle'),
   formUpload
 );
 

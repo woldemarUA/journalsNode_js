@@ -29,6 +29,10 @@ export default function NavBar() {
                 <LinkContainer to='/dashboard'>
                   <Nav.Link>Espace personnelle</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to='/add'>
+                  <Nav.Link>Ajout journal</Nav.Link>
+                </LinkContainer>
+
                 <Button
                   variant='light'
                   onClick={handleLogout}

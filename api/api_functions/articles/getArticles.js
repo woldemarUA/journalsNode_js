@@ -7,10 +7,6 @@ async function fetchApprovedArticles() {
     const articles = await Article.findAll({
       order: [['created_at', 'DESC']], // Trier les articles par date de création, du plus récent au plus ancien
       where: { is_approved: true }, // Condition pour filtrer uniquement les articles approuvés
-      include: {
-        model: User, // Inclure les informations de l'utilisateur associé à chaque article
-        attributes: ['nom'], // Sélectionner uniquement le nom de l'utilisateur
-      },
     });
 
     return articles; // Retourner la liste des articles approuvés
@@ -25,10 +21,6 @@ async function fetchPendingApprovalArticles() {
   try {
     const articles = await Article.findAll({
       where: { is_approved: false }, // Condition pour filtrer uniquement les articles non approuvés
-      include: {
-        model: User, // Inclure les informations de l'utilisateur associé
-        attributes: ['nom'], // Sélectionner uniquement le nom de l'utilisateur
-      },
     });
 
     return articles; // Retourner la liste des articles en attente d'approbation

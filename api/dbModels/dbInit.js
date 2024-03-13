@@ -12,9 +12,9 @@ const Article = ArticleModel(sequelizeConn, DataTypes);
 
 // Définir les associations entre les modèles
 // Un utilisateur (User) peut avoir plusieurs articles (Article) : relation "1 à plusieurs"
-User.hasMany(Article, { foreignKey: 'userId' });
+// User.hasMany(Article, { foreignKey: 'userId' });
 // Un article (Article) appartient à un utilisateur (User) : relation "plusieurs à 1"
-Article.belongsTo(User, { foreignKey: 'userId' });
+// Article.belongsTo(User, { foreignKey: 'userId' });
 
 // Exporter les modèles User et Article pour les utiliser dans d'autres parties de l'application
 module.exports = { User, Article };

@@ -7,17 +7,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    username: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     author: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'User',
-        key: 'id'
-      }
+      allowNull: false
     },
     title: {
       type: DataTypes.STRING(255),
@@ -29,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     image: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: true,
+      defaultValue: "https:\/\/tymchenko.fr\/images\/default2.png"
     },
     is_approved: {
       type: DataTypes.BOOLEAN,
@@ -47,13 +48,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "IDX_CD8737FA64B64DCC",
-        using: "BTREE",
-        fields: [
-          { name: "userId" },
         ]
       },
     ]

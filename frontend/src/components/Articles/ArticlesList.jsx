@@ -50,6 +50,7 @@ export default function ArticlesList() {
           <Col>Créé par</Col>
           <Col>Créé à</Col>
           <Col>Édité à</Col>
+          <Col>Gerer</Col>
         </Row>
       </ListGroup.Item>
       {articles &&
