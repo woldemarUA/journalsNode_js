@@ -1,10 +1,11 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArticleForm } from './ArticleForm';
 import { addArticle, editArticle } from '../../apiCalls/fetchArticles';
 import { Alert } from 'react-bootstrap';
 
 const ArticleManagement = ({ formType }) => {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     id: '',
     author: '',
@@ -16,13 +17,16 @@ const ArticleManagement = ({ formType }) => {
   });
   const [feedback, setFeedback] = useState({ message: '', type: '' });
   const navigate = useNavigate();
-  const location = useLocation();
-  if (formType === 'edit') {
-    const article = location.state;
-    const { image, author, title, description } = article;
-    console.log(image, author, title, description);
-    // setFormData({ image, author, title, description });
-  }
+
+  useEffect(() => {
+    if (location.state && location.state) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        ...location.state,
+      }));
+    }
+  }, [location]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -42,7 +46,7 @@ const ArticleManagement = ({ formType }) => {
     try {
       if (formType === 'add') {
         const response = await addArticle(formData);
-        console.log(`added article  ${response}`);
+
         setFeedback({
           message:
             "Journal ajouté avec succès. Il doit être approuvé par l'administrateur",

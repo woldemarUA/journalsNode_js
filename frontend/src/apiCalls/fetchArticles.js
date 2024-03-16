@@ -18,8 +18,6 @@ export const addArticle = async (article) => {
 
     const formData = new FormData();
     for (const key in article) {
-      console.log(key);
-      console.log(article[key]);
       formData.append(key, article[key]);
     }
     const response = await axios.post(`${articlesAPI}/articles`, formData, {
@@ -34,13 +32,34 @@ export const addArticle = async (article) => {
   }
 };
 
+export const deleteArticle = async (id) => {
+  try {
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 export const editArticle = async (article) => {
   try {
     // patch request
-    const response = { data: article };
+
+    const formData = new FormData();
+    for (const key in article) {
+      formData.append(key, article[key]);
+    }
+    const response = await axios.patch(
+      `${articlesAPI}/articles/${article.id}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
     return response.data;
   } catch (err) {
-    console.error('failed to upload article', err);
+    console.error('failed to edit article', err);
     throw err;
   }
 };

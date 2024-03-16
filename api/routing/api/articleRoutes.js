@@ -74,12 +74,13 @@ router.post(
 );
 router.patch(
   '/:id',
-  ensureApiAuthenticated,
+  // ensureApiAuthenticated,
   upload.single('imageArticle'),
   formUpload
 );
 
-router.delete('/:id', ensureApiAuthenticated, deleteArticle);
+// router.delete('/:id', ensureApiAuthenticated, deleteArticle);
+router.delete('/:id', deleteArticle);
 
 // admin
 router.get('/admin/pending', ensureApiAuthenticated, async (req, res) => {

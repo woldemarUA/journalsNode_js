@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, FloatingLabel } from 'react-bootstrap';
+import { Form, Button, FloatingLabel, Image } from 'react-bootstrap';
 
 export const ArticleForm = ({
   formType,
@@ -31,10 +31,16 @@ export const ArticleForm = ({
           required
         />
       </FloatingLabel>
+      {formData.image && (
+        <Image
+          src={formData.image}
+          thumbnail
+        />
+      )}
       <Form.Check
         type='switch'
         id='image-switch'
-        label='ajout image?'
+        label={`${formData.image ? 'Changer' : 'Ajouter'} image`}
         checked={switchInput}
         onChange={() => setSwitchInput(!switchInput)}
         className='mb-3'
