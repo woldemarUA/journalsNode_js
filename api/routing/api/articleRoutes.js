@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const { upload } = require('../../utilities/upload');
 const {
   fetchApprovedArticles,
@@ -10,36 +11,8 @@ const {
 const getArticle = require('../../api_functions/articles/getArticle');
 const deleteArticle = require('../../api_functions/articles/deleteArticle');
 const formUpload = require('../../utilities/formUpload');
-const ensureApiAuthenticated = require('../auth/ensureAPIAuthenticated');
+
 const extractId = require('../../utilities/extractId');
-const { deleteFile } = require('../../utilities/fileDelete');
-
-// // In your apiRoutes or wherever you define your routes
-// app.get('/protected', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   res.json({ message: 'Success! You can access protected routes.' });
-// });
-
-// router.post('/upload', upload.single('article-image'), (req, res) => {
-//   let image;
-
-//   // Si un fichier est téléchargé, extraire le chemin de l'image
-//   try {
-//     if (req.file) {
-//       image = req.file.path.slice(req.file.path.indexOf('/') + 1);
-//     }
-//     res.status(200).json({ image });
-//   } catch (err) {
-//     console.error(err);
-//     res.sendStatus(500);
-//   }
-// });
-
-router.delete('/deleteImage', (req, res) => {
-  const file = req.body.filePath;
-
-  if (!file.includes('default')) deleteFile(file);
-  res.status(200).json({ file });
-});
 
 // articles
 router.get('/:id', async (req, res) => {
@@ -68,52 +41,69 @@ router.get('/', async (req, res) => {
 
 router.post(
   '/',
-  // ensureApiAuthenticated,
+
+  passport.authenticate('jwt', { session: false }),
   upload.single('imageArticle'),
   formUpload
 );
 router.patch(
   '/:id',
-  // ensureApiAuthenticated,
+
+  passport.authenticate('jwt', { session: false }),
   upload.single('imageArticle'),
   formUpload
 );
 
-// router.delete('/:id', ensureApiAuthenticated, deleteArticle);
-router.delete('/:id', deleteArticle);
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  deleteArticle
+);
 
 // admin
-router.get('/admin/pending', ensureApiAuthenticated, async (req, res) => {
-  try {
-    const articles = await fetchPendingApprovalArticles();
+router.get(
+  '/admin/pending',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const articles = await fetchPendingApprovalArticles();
 
-    res.status(200).json(articles);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+      res.status(200).json(articles);
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   }
-});
-router.get('/user/:id', ensureApiAuthenticated, async (req, res) => {
-  try {
-    const userId = extractId(req);
-    const articles = await fetchUserArticles(userId);
+);
+router.get(
+  '/user/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const userId = extractId(req);
+      const articles = await fetchUserArticles(userId);
 
-    res.status(200).json(articles);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+      res.status(200).json(articles);
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   }
-});
+);
 
-router.patch('/admin/approve/:id', ensureApiAuthenticated, async (req, res) => {
-  try {
-    const id = extractId(req);
-    const msg = await changeStatus(id);
-    res.status(200).json(msg);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+router.patch(
+  '/admin/approve/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const id = extractId(req);
+      const msg = await changeStatus(id);
+      res.status(200).json(msg);
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   }
-});
+);
 
 module.exports = router;

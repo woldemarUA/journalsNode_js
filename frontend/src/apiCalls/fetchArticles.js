@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const articlesAPI = process.env.REACT_APP_API_URL;
+const Authorization = `Bearer ${localStorage.getItem('token') || null}`;
 
 export const fetchArticles = async () => {
   try {
@@ -11,6 +12,8 @@ export const fetchArticles = async () => {
     throw err;
   }
 };
+
+// AUTH REQUESTS
 
 export const addArticle = async (article) => {
   try {
@@ -23,6 +26,7 @@ export const addArticle = async (article) => {
     const response = await axios.post(`${articlesAPI}/articles`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization,
       },
     });
     return response.data;
@@ -34,6 +38,11 @@ export const addArticle = async (article) => {
 
 export const deleteArticle = async (id) => {
   try {
+    console.log(id);
+    const response = await axios.delete(`${articlesAPI}/articles/${id}`, {
+      headers: { Authorization },
+    });
+    return response.data;
   } catch (err) {
     console.error(err);
     throw err;
@@ -54,6 +63,7 @@ export const editArticle = async (article) => {
       {
         headers: {
           'Content-Type': 'multipart/form-data',
+          Authorization,
         },
       }
     );

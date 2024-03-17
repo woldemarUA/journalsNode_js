@@ -1,5 +1,5 @@
 // Importer multer pour la gestion des téléchargements de fichiers
-const { log } = require('console');
+
 const multer = require('multer');
 // Importer le module path pour manipuler les chemins de fichiers
 const path = require('path');

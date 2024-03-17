@@ -12,15 +12,13 @@ const formUpload = async (req, res) => {
 
     const { title, author, description, id, is_approved, userId, username } =
       req.body;
-    console.log('reqbody', req.body);
-    console.log(`username  ${username}`);
+
     // Assurer que userId est un entier
     // userId = parseInt(userId, 10);
 
     let image;
     // Si un fichier est téléchargé, extraire le chemin de l'image
     if (req.file) {
-      console.log(req.file.filename);
       const baseURI = process.env.IMAGE_UPLOAD_PATH;
       image =
         process.env.IMAGE_UPLOAD_PATH + '/titleImages/' + req.file.filename;

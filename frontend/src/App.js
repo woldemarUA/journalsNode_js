@@ -30,7 +30,15 @@ function App() {
           />
           <Route
             path='/details'
-            element={<ArticleDetail />}
+            element={<ArticleDetail page={'details'} />}
+          />
+          <Route
+            path='/delete'
+            element={
+              <ProtectedRoute>
+                <ArticleDetail page={'delete'} />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/add'
