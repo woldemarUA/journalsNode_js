@@ -14,6 +14,7 @@ export const ArticleForm = ({
   return (
     <Form
       className='m-2'
+      // onSubmit={() => console.log(formData)}
       onSubmit={onSubmit}
     >
       <FloatingLabel

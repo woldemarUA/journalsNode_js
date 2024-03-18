@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const authPath = process.env.REACT_APP_AUTH_URL;
 
-export const login = async (user) => {
+export const loginApi = async (user) => {
   try {
     const response = await axios.post(`${authPath}/login`, user);
     return response.data;
@@ -12,7 +12,7 @@ export const login = async (user) => {
     throw err.response.data;
   }
 };
-export const register = async (user) => {
+export const registerApi = async (user) => {
   try {
     const response = await axios.post(`${authPath}/register`, user);
     console.log(response);

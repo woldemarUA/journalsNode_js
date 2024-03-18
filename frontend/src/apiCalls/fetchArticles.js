@@ -38,7 +38,6 @@ export const addArticle = async (article) => {
 
 export const deleteArticle = async (id) => {
   try {
-    console.log(id);
     const response = await axios.delete(`${articlesAPI}/articles/${id}`, {
       headers: { Authorization },
     });
@@ -58,7 +57,7 @@ export const editArticle = async (article) => {
       formData.append(key, article[key]);
     }
     const response = await axios.patch(
-      `${articlesAPI}/articles/${article.id}`,
+      `${articlesAPI}/articles/edit/${article.id}`,
       formData,
       {
         headers: {

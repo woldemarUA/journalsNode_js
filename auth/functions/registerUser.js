@@ -4,6 +4,17 @@ const hashPassword = require('../utilities/hashPassword');
 async function register(userData) {
   try {
     const { username, password, email } = userData;
+
+    const checkUserQuery = {
+      name: 'checkUserName',
+      text: 'SELECT * FROM users WHERE username = $1',
+      values: [username],
+    };
+    const checkResult = await pool.query(checkUserQuery);
+    if (checkResult.rows.length > 0) {
+      throw new Error(`Nom d'utilisateur ${username} existe deja`);
+    }
+
     const hashed_password = await hashPassword(password);
 
     const query = {
@@ -17,7 +28,7 @@ async function register(userData) {
     return result.rows[0];
   } catch (err) {
     console.error(err);
-    return err;
+    throw err;
   }
 }
 

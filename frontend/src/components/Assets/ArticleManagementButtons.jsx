@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../context/UserProvider';
 
 const ArticleManagementButtons = ({ article }) => {
   const token = localStorage.getItem('token');
-  const id = localStorage.getItem('userId');
+  const { user } = useUser();
+  const id = user.userId;
   const { userId } = article;
 
   return (

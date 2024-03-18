@@ -38,13 +38,15 @@ const ArticleDetail = ({ page }) => {
             pas être annulé`}
           </Alert>
           <div className='mb-2'>
-            <Button
-              variant='danger'
-              size='sm'
-              onClick={() => handleDelete(article.id)}
-            >
-              Confirmer
-            </Button>
+            {article.id && (
+              <Button
+                variant='danger'
+                size='sm'
+                onClick={() => handleDelete(article.id)}
+              >
+                Confirmer
+              </Button>
+            )}
           </div>
         </>
       )}

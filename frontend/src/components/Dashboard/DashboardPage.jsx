@@ -1,17 +1,13 @@
 import React from 'react';
-
-import { jwtDecode } from 'jwt-decode';
+import { useUser } from '../../context/UserProvider';
 import { Alert } from 'react-bootstrap';
 
 function DashboardPage() {
-  const token = localStorage.getItem('token');
-  const decoded = jwtDecode(token);
-  localStorage.setItem('userId', decoded.id);
-  localStorage.setItem('username', decoded.username);
-  // console.log(decoded);
+  const { user } = useUser();
+  console.log(user);
   return (
     <>
-      <Alert variant='success'> Bonjour {decoded.username}</Alert>
+      <Alert variant='success'> Bonjour {user.username || 'Guest'}</Alert>
     </>
   );
 }

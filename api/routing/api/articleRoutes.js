@@ -47,7 +47,7 @@ router.post(
   formUpload
 );
 router.patch(
-  '/:id',
+  '/edit/:id',
 
   passport.authenticate('jwt', { session: false }),
   upload.single('imageArticle'),

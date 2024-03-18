@@ -1,9 +1,8 @@
 // Importations
 import React, { useState } from 'react'; // Base de React et le hook useState pour la gestion de l'état
-import { useNavigate } from 'react-router-dom'; // Hook pour la navigation programmatique
 import { Alert } from 'react-bootstrap'; // Composant de React Bootstrap pour afficher des alertes
 import { AuthForm } from './AuthForm'; // Votre composant de formulaire personnalisé
-import { login, register } from '../../apiCalls/authCalls'; // Fonctions d'appel d'API
+import { useUser } from '../../context/UserProvider';
 
 export const AuthPage = ({ formType }) => {
   // Définition du composant avec la prop `formType` pour déterminer la fonction du formulaire
@@ -13,8 +12,8 @@ export const AuthPage = ({ formType }) => {
     email: '',
     password: '',
   });
+  const { login, register } = useUser();
   const [feedback, setFeedback] = useState({ message: '', type: '' }); // État pour les messages de retour
-  const navigate = useNavigate(); // Hook pour activer la navigation programmatique
 
   // Gestionnaire pour les changements de champs du formulaire, mettant à jour l'état formData
   const handleChange = (e) => {
@@ -31,13 +30,10 @@ export const AuthPage = ({ formType }) => {
 
     try {
       if (formType === 'login') {
-        // Vérifier si le formulaire est pour la connexion
-        const fetchedAuth = await login(formData); // Appeler l'API de connexion avec formData
-        localStorage.setItem('token', fetchedAuth.token); // Stocker le jeton reçu dans localStorage
-        navigate('/dashboard'); // Naviguer vers le tableau de bord après une connexion réussie
+        await login(formData);
       } else if (formType === 'register') {
         // Vérifier si le formulaire est pour l'inscription
-        await register(formData); // Appeler l'API d'inscription avec formData
+        await register(formData);
         setFeedback({
           message: 'Inscription réussie. Veuillez vous connecter.',
           type: 'success',
@@ -48,7 +44,8 @@ export const AuthPage = ({ formType }) => {
       }
     } catch (err) {
       // Gérer toutes erreurs
-      setFeedback({ message: err.message, type: 'danger' }); // Définir le retour d'erreur
+
+      setFeedback({ message: err.response.data.error, type: 'danger' }); // Définir le retour d'erreur
     }
   };
 

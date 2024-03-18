@@ -1,18 +1,11 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserProvider';
 
 export default function NavBar() {
   const token = localStorage.getItem('token');
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userId');
-    return navigate('/');
-  };
+  const { logout } = useUser();
 
   return (
     <Navbar
@@ -37,7 +30,7 @@ export default function NavBar() {
 
                 <Button
                   variant='light'
-                  onClick={handleLogout}
+                  onClick={logout}
                 >
                   Déconnecter
                 </Button>

@@ -17,8 +17,9 @@ router.post('/register', async (req, res) => {
     const msg = await register(userData);
     res.status(200).json(msg);
   } catch (err) {
-    console.error(err);
-    res.sendStatus(500);
+    // console.error(err);
+    // res.sendStatus(500);
+    res.status(400).json({ error: err.message });
   }
 });
 

@@ -1,22 +1,24 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ArticleForm } from './ArticleForm';
 import { addArticle, editArticle } from '../../apiCalls/fetchArticles';
 import { Alert } from 'react-bootstrap';
+import { useUser } from '../../context/UserProvider';
 
 const ArticleManagement = ({ formType }) => {
   const location = useLocation();
+  const { user } = useUser();
+  const { userId, username } = user;
   const [formData, setFormData] = useState({
     id: '',
     author: '',
     title: '',
     description: '',
     imageArticle: null,
-    userId: parseInt(localStorage.getItem('userId'), 10),
-    username: localStorage.getItem('username'),
+    userId,
+    username,
   });
   const [feedback, setFeedback] = useState({ message: '', type: '' });
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state && location.state) {
@@ -58,12 +60,12 @@ const ArticleManagement = ({ formType }) => {
           title: '',
           description: '',
           imageArticle: null,
-          userId: parseInt(localStorage.getItem('userId'), 10),
-          username: localStorage.getItem('username'),
+          userId,
+          username,
         });
       } else if (formType === 'edit') {
         const response = await editArticle(formData);
-        console.log(`edited article  ${response}`);
+
         setFeedback({
           message: 'Journal édité avec succès',
           type: 'success',
