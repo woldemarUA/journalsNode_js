@@ -7,9 +7,10 @@ import ProtectedRoute from './components/Auth/ProtectedRoute';
 import IsLogged from './components/Auth/IsLogged';
 import { AuthPage } from './components/Auth/AuthPage';
 import DashboardPage from './components/Dashboard/DashboardPage';
-import ArticlesList from './components/Articles/ArticlesList';
+
 import ArticleDetail from './components/Articles/ArticleDetail';
 import ArticleManagement from './components/Articles/ArticleManagement';
+import { Home } from './components/Home/Home';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Routes>
             <Route
               path='/'
-              element={<ArticlesList />}
+              element={<Home />}
             />
             <Route
               path='/login'

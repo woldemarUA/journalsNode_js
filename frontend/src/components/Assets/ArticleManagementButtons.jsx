@@ -5,9 +5,8 @@ import { useArticles } from '../../context/ArticlesProvider';
 import { Button } from 'react-bootstrap';
 
 const ArticleManagementButtons = ({ article }) => {
-  const token = localStorage.getItem('token');
   const { user } = useUser() || {};
-  const roles = user ? user.roles : null;
+  const token = user ? user.token : null;
   const id = user ? user.userId : null;
   const { userId } = article;
 

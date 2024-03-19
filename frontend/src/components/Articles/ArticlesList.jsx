@@ -1,55 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { ListGroup, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import React from 'react';
+import { ListGroup, Row, Col } from 'react-bootstrap';
 
-import { fetchArticles } from '../../apiCalls/fetchArticles';
 import ArticleItem from './ArticleItem';
-import { useArticles } from '../../context/ArticlesProvider';
-import { useUser } from '../../context/UserProvider';
 
-export default function ArticlesList({ pending }) {
-  const [articles, setArticles] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { setPending } = useArticles();
-  const { user } = useUser();
-  const token = user ? user.token : null;
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        setPending(pending);
-        let fetchedData;
-        if (pending) {
-          if (!token) {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            fetchedData = await fetchArticles(pending, token);
-          }
-          fetchedData = await fetchArticles(pending, token);
-        } else {
-          fetchedData = await fetchArticles();
-        }
-        setArticles(fetchedData);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [pending, setPending, token]);
-
-  if (loading)
-    return (
-      <Spinner
-        animation='border'
-        role='status'
-      >
-        <span className='visually-hidden'>Loading...</span>
-      </Spinner>
-    );
-  if (error) return <Alert variant='danger'>Error: {error.message}</Alert>;
-
+export default function ArticlesList({ articles }) {
   return (
     <ListGroup
       className='my-2'

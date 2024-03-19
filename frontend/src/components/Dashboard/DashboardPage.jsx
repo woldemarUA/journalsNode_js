@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useUser } from '../../context/UserProvider';
-import { Alert, Accordion } from 'react-bootstrap';
+import { useArticles } from '../../context/ArticlesProvider';
+import { Alert, Accordion, Badge } from 'react-bootstrap';
 import ArticlesList from '../Articles/ArticlesList';
+import { ListUsers } from '../Users/ListUsers';
 
 function DashboardPage() {
-  const { user } = useUser();
-  const { roles } = user;
+  const { user, isAdmin, users } = useUser();
+  const { pendingArticles, setPending } = useArticles();
+
+  useEffect(() => {
+    setPending(true);
+  }, [setPending]);
 
   return (
     <>
       <Alert variant='success'> Bonjour {user.username || 'Guest'}</Alert>
 
-      {roles.includes('admin') && (
+      {isAdmin && (
         <Accordion>
           <Accordion.Item eventKey='0'>
-            <Accordion.Header>Journals a approve</Accordion.Header>
+            <Accordion.Header>
+              Journals a approve{' '}
+              {pendingArticles.length > 0 && (
+                <Badge bg='danger'>{pendingArticles.length}</Badge>
+              )}
+            </Accordion.Header>
             <Accordion.Body>
-              <ArticlesList pending={true} />
+              <ArticlesList articles={pendingArticles} />
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey='1'>
             <Accordion.Header>Liste des utilisateurs</Accordion.Header>
-            <Accordion.Body>utlisqteurs</Accordion.Body>
+            <Accordion.Body>
+              <ListUsers users={users} />
+            </Accordion.Body>
           </Accordion.Item>
         </Accordion>
       )}

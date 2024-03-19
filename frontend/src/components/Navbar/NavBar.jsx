@@ -4,8 +4,7 @@ import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useUser } from '../../context/UserProvider';
 
 export default function NavBar() {
-  const token = localStorage.getItem('token');
-  const { logout } = useUser();
+  const { logout, user } = useUser();
 
   return (
     <Navbar
@@ -19,7 +18,7 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls='navbarResponsive' />
         <Navbar.Collapse id='navbarResponsive'>
           <Nav className='me-auto'>
-            {token ? (
+            {user && user.token ? (
               <>
                 <LinkContainer to='/dashboard'>
                   <Nav.Link>Espace personnelle</Nav.Link>

@@ -3,7 +3,7 @@ import { Row, Col, Alert, Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { dateConvert } from '../../utils/dateConversion';
-import { deleteArticle } from '../../apiCalls/fetchArticles';
+import { useArticles } from '../../context/ArticlesProvider';
 
 const ArticleDetail = ({ page }) => {
   const location = useLocation();
@@ -11,6 +11,7 @@ const ArticleDetail = ({ page }) => {
   const [msg, setMsg] = useState(null);
   const [delBtn, setDelBtn] = useState(false);
   const [visible, setVisible] = useState('');
+  const { deleteArticleHandler } = useArticles();
 
   const article = location.state;
   const {
@@ -29,11 +30,12 @@ const ArticleDetail = ({ page }) => {
   }, [page]);
   const handleDelete = async (id) => {
     try {
-      const res = await deleteArticle(id);
+      const res = await deleteArticleHandler(id);
       setDelBtn(false);
       setMsg(res.msg);
       setVisible('d-none');
     } catch (err) {
+      console.log(err);
       setMsg(err.response.data);
     }
   };

@@ -1,15 +1,17 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArticleForm } from './ArticleForm';
-import { addArticle, editArticle } from '../../apiCalls/fetchArticles';
+
 import { Alert } from 'react-bootstrap';
 import { useUser } from '../../context/UserProvider';
+import { useArticles } from '../../context/ArticlesProvider';
 
 const ArticleManagement = ({ formType }) => {
   const location = useLocation();
   const { user } = useUser();
   const { userId, username } = user;
   const { roles } = user;
+  const { editArticleHandler, addArticleHandler } = useArticles();
   const [formData, setFormData] = useState({
     id: '',
     author: '',
@@ -55,7 +57,7 @@ const ArticleManagement = ({ formType }) => {
 
     try {
       if (formType === 'add') {
-        await addArticle(formData);
+        await addArticleHandler(formData);
 
         setFeedback({
           message:
@@ -72,7 +74,7 @@ const ArticleManagement = ({ formType }) => {
           username,
         });
       } else if (formType === 'edit') {
-        await editArticle(formData);
+        await editArticleHandler(formData);
 
         setFeedback({
           message: 'Journal édité avec succès',

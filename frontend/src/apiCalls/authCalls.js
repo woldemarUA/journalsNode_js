@@ -8,7 +8,6 @@ export const loginApi = async (user) => {
     return response.data;
   } catch (err) {
     console.error('failed to fetch data', err);
-
     throw err.response.data;
   }
 };

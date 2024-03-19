@@ -5,7 +5,7 @@ async function getUserById(id) {
     const query = {
       // give the query a unique name
       name: 'fetch-user',
-      text: 'SELECT id, username, email, role, roles FROM users WHERE id = $1',
+      text: 'SELECT id, username, email, roles FROM users WHERE id = $1',
       values: [id],
     };
 
