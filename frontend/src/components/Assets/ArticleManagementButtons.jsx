@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../../context/UserProvider';
+import { useArticles } from '../../context/ArticlesProvider';
+import { Button } from 'react-bootstrap';
 
 const ArticleManagementButtons = ({ article }) => {
   const token = localStorage.getItem('token');
-  const { user } = useUser();
-  const id = user.userId;
+  const { user } = useUser() || {};
+  const roles = user ? user.roles : null;
+  const id = user ? user.userId : null;
   const { userId } = article;
+
+  const { pending, approveArticleHandler } = useArticles();
 
   return (
     <>
@@ -17,6 +22,15 @@ const ArticleManagementButtons = ({ article }) => {
       >
         Details
       </Link>
+      {pending && (
+        <Button
+          variant='outline-warning'
+          size='sm'
+          onClick={() => approveArticleHandler(article.id)}
+        >
+          Approuver
+        </Button>
+      )}
       {token && parseInt(id, 10) === userId && (
         <>
           <Link

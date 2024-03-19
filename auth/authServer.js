@@ -14,6 +14,7 @@ app.use(express.json());
 
 app.use(passport.initialize());
 require('./passportConfig/localStrategy');
+require('./passportConfig/tokenAuth');
 
 app.use('/', userRoutes);
 

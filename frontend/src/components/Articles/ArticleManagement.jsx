@@ -9,6 +9,7 @@ const ArticleManagement = ({ formType }) => {
   const location = useLocation();
   const { user } = useUser();
   const { userId, username } = user;
+  const { roles } = user;
   const [formData, setFormData] = useState({
     id: '',
     author: '',
@@ -17,6 +18,7 @@ const ArticleManagement = ({ formType }) => {
     imageArticle: null,
     userId,
     username,
+    is_approved: false,
   });
   const [feedback, setFeedback] = useState({ message: '', type: '' });
 
@@ -27,7 +29,13 @@ const ArticleManagement = ({ formType }) => {
         ...location.state,
       }));
     }
-  }, [location]);
+    if (roles.includes('admin')) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        is_approved: true,
+      }));
+    }
+  }, [location, roles]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +55,7 @@ const ArticleManagement = ({ formType }) => {
 
     try {
       if (formType === 'add') {
-        const response = await addArticle(formData);
+        await addArticle(formData);
 
         setFeedback({
           message:
@@ -64,7 +72,7 @@ const ArticleManagement = ({ formType }) => {
           username,
         });
       } else if (formType === 'edit') {
-        const response = await editArticle(formData);
+        await editArticle(formData);
 
         setFeedback({
           message: 'Journal édité avec succès',

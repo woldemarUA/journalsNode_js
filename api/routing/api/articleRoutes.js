@@ -62,11 +62,12 @@ router.delete(
 
 // admin
 router.get(
-  '/admin/pending',
+  '/user/:id',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      const articles = await fetchPendingApprovalArticles();
+      const userId = extractId(req);
+      const articles = await fetchUserArticles(userId);
 
       res.status(200).json(articles);
     } catch (err) {
@@ -76,12 +77,11 @@ router.get(
   }
 );
 router.get(
-  '/user/:id',
+  '/admin/pending',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
-      const userId = extractId(req);
-      const articles = await fetchUserArticles(userId);
+      const articles = await fetchPendingApprovalArticles();
 
       res.status(200).json(articles);
     } catch (err) {

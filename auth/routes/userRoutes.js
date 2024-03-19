@@ -50,83 +50,101 @@ router.post('/login', (req, res, next) => {
   )(req, res, next);
 });
 
-router.get('/users', async (req, res) => {
-  try {
-    const users = await getAllUsers();
-    res.status(200).json(users);
-  } catch (err) {
-    console.error(err);
-    res
-      .status(500)
-      .json({ message: 'Internal Server Error', error: err.message });
-  }
-});
+// auth
 
-router.get('/users/:id', async (req, res) => {
-  try {
-    const id = extractId(req);
-
-    const user = await getUserById(id);
-    if (!user) {
-      // si l,utilisateur netait trouvee a 404 Not Found reponse
-      return res.status(404).json({ message: 'Pas des utilisateur' });
+router.get(
+  '/users',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const users = await getAllUsers();
+      res.status(200).json(users);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .json({ message: 'Internal Server Error', error: err.message });
     }
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
-    res
-      .status(500)
-      .json({ message: 'Internal Server Error', error: err.message });
   }
-});
+);
 
-router.delete('/users/:id', async (req, res) => {
-  try {
-    const id = extractId(req);
+router.get(
+  '/users/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const id = extractId(req);
 
-    const msg = await deleteUser(id);
-    res.status(200).json({ message: msg });
-  } catch (err) {
-    console.error(err);
-    res
-      .status(500)
-      .json({ message: 'Internal Server Error', error: err.message });
-  }
-});
-
-router.patch('/users/update/:userId', async (req, res) => {
-  const { userId } = req.params;
-  const { username, email, password } = req.body;
-  console.log(userId, username, email, password);
-  try {
-    // Appeler updateUser et attendre sa réponse
-    const updateResponse = await updateUser({
-      userId,
-      username,
-      email,
-      password,
-    });
-
-    // Vérifier la propriété success de la réponse
-    if (!updateResponse.success) {
-      // Si success est faux, utiliser le message de la réponse pour le statut d'erreur
-      // Cela pourrait être un 404 si aucun utilisateur n'a été trouvé, ou un 400 s'il y avait un doublon de nom d'utilisateur, etc.
-      // Ici, vous pourriez décider du code de statut en fonction du message ou ajouter plus de logique pour différencier
-      return res.status(400).json({ message: updateResponse.message });
+      const user = await getUserById(id);
+      if (!user) {
+        // si l,utilisateur netait trouvee a 404 Not Found reponse
+        return res.status(404).json({ message: 'Pas des utilisateur' });
+      }
+      res.status(200).json(user);
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .json({ message: 'Internal Server Error', error: err.message });
     }
-
-    // Si success est vrai, procéder à l'envoi de la réponse de succès
-    res
-      .status(200)
-      .json({ message: "L'utilisateur a été mis à jour avec succès." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Erreur lors de la mise à jour de l'utilisateur.",
-      error, // Utilisation du raccourci ES6 pour error: error
-    });
   }
-});
+);
+
+router.delete(
+  '/users/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const id = extractId(req);
+
+      const msg = await deleteUser(id);
+      res.status(200).json({ message: msg });
+    } catch (err) {
+      console.error(err);
+      res
+        .status(500)
+        .json({ message: 'Internal Server Error', error: err.message });
+    }
+  }
+);
+
+router.patch(
+  '/users/update/:userId',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    const { userId } = req.params;
+    const { username, email, password } = req.body;
+    console.log(userId, username, email, password);
+    try {
+      // Appeler updateUser et attendre sa réponse
+      const updateResponse = await updateUser({
+        userId,
+        username,
+        email,
+        password,
+      });
+
+      // Vérifier la propriété success de la réponse
+      if (!updateResponse.success) {
+        // Si success est faux, utiliser le message de la réponse pour le statut d'erreur
+        // Cela pourrait être un 404 si aucun utilisateur n'a été trouvé, ou un 400 s'il y avait un doublon de nom d'utilisateur, etc.
+        // Ici, vous pourriez décider du code de statut en fonction du message ou ajouter plus de logique pour différencier
+        return res.status(400).json({ message: updateResponse.message });
+      }
+
+      // Si success est vrai, procéder à l'envoi de la réponse de succès
+      res
+        .status(200)
+        .json({ message: "L'utilisateur a été mis à jour avec succès." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        message: "Erreur lors de la mise à jour de l'utilisateur.",
+        error, // Utilisation du raccourci ES6 pour error: error
+      });
+    }
+  }
+);
 
 router.post('/logout', async (req, res) => {
   try {
@@ -138,7 +156,7 @@ router.post('/logout', async (req, res) => {
     res.sendStatus(500);
   }
 });
-// router.post('/token', async (req, res) => {
+// router.post('/token',passport.authenticate('jwt', { session: false }), async (req, res) => {
 //   try {
 //     const msg = req.body;
 //     console.log(msg);
@@ -148,7 +166,7 @@ router.post('/logout', async (req, res) => {
 //     res.sendStatus(500);
 //   }
 // });
-// router.post('/verify', async (req, res) => {
+// router.post('/verify',passport.authenticate('jwt', { session: false }), async (req, res) => {
 //   try {
 //     const msg = req.body;
 //     console.log(msg);

@@ -20,6 +20,7 @@ export const registerApi = async (user) => {
     return response.status;
   } catch (err) {
     console.error('failed to register user', user);
-    throw err;
+    // console.log(err.response.data);
+    throw err.response.data;
   }
 };

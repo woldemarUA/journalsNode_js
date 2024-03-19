@@ -2,10 +2,13 @@ import axios from 'axios';
 
 const articlesAPI = process.env.REACT_APP_API_URL;
 const Authorization = `Bearer ${localStorage.getItem('token') || null}`;
-
-export const fetchArticles = async () => {
+export const fetchArticles = async (pending = false, token = null) => {
   try {
-    const response = await axios.get(`${articlesAPI}/articles`);
+    const apiLink = `${articlesAPI}${
+      pending ? '/articles/admin/pending' : '/articles'
+    }`;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await axios.get(apiLink, { headers: { Authorization } });
     return response.data;
   } catch (err) {
     console.error('failed to fetch data', err);
@@ -69,6 +72,23 @@ export const editArticle = async (article) => {
     return response.data;
   } catch (err) {
     console.error('failed to edit article', err);
+    throw err;
+  }
+};
+
+export const approveArticle = async (id) => {
+  // /admin/approve/
+  try {
+    const response = await axios.patch(
+      `${articlesAPI}/articles/admin/approve/${id}`,
+      {},
+      {
+        headers: { Authorization },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
     throw err;
   }
 };

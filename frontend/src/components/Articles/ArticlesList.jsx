@@ -3,17 +3,31 @@ import { ListGroup, Row, Col, Spinner, Alert } from 'react-bootstrap';
 
 import { fetchArticles } from '../../apiCalls/fetchArticles';
 import ArticleItem from './ArticleItem';
+import { useArticles } from '../../context/ArticlesProvider';
+import { useUser } from '../../context/UserProvider';
 
-export default function ArticlesList() {
+export default function ArticlesList({ pending }) {
   const [articles, setArticles] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { setPending } = useArticles();
+  const { user } = useUser();
+  const token = user ? user.token : null;
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const fetchedData = await fetchArticles();
+        setPending(pending);
+        let fetchedData;
+        if (pending) {
+          if (!token) {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            fetchedData = await fetchArticles(pending, token);
+          }
+          fetchedData = await fetchArticles(pending, token);
+        } else {
+          fetchedData = await fetchArticles();
+        }
         setArticles(fetchedData);
       } catch (err) {
         setError(err);
@@ -23,7 +37,7 @@ export default function ArticlesList() {
     };
 
     loadData();
-  }, []);
+  }, [pending, setPending, token]);
 
   if (loading)
     return (

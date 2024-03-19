@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
       try {
         const decoded = jwtDecode(token);
         return {
-          //   token,
+          token,
           userId: decoded.id,
           username: decoded.username,
           roles: decoded.roles,
@@ -23,7 +23,7 @@ export const UserProvider = ({ children }) => {
       } catch (err) {
         console.error('Erreur decoder JWT:', err);
         return {
-          //   token: null,
+          token: null,
           userId: null,
           username: null,
           roles: null,

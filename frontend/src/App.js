@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AppContextProvider from './context/AppContextProvider';
 import NavBar from './components/Navbar/NavBar';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
+import IsLogged from './components/Auth/IsLogged';
 import { AuthPage } from './components/Auth/AuthPage';
 import DashboardPage from './components/Dashboard/DashboardPage';
 import ArticlesList from './components/Articles/ArticlesList';
@@ -23,11 +24,19 @@ function App() {
             />
             <Route
               path='/login'
-              element={<AuthPage formType={'login'} />}
+              element={
+                <IsLogged>
+                  <AuthPage formType={'login'} />
+                </IsLogged>
+              }
             />
             <Route
               path='/register'
-              element={<AuthPage formType={'register'} />}
+              element={
+                <IsLogged>
+                  <AuthPage formType={'register'} />
+                </IsLogged>
+              }
             />
             <Route
               path='/details'

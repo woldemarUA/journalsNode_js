@@ -9,12 +9,10 @@ export const ArticleForm = ({
   onImageChange,
 }) => {
   const [switchInput, setSwitchInput] = useState(false);
-  const isAdd = formType === 'add';
-  // console.log(formData);
+
   return (
     <Form
       className='m-2'
-      // onSubmit={() => console.log(formData)}
       onSubmit={onSubmit}
     >
       <FloatingLabel
