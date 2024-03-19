@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
     } catch (err) {
       console.error(err);
     }
-  }, [user.token]);
+  }, [user.token, isAdmin]);
   const login = async (formData) => {
     try {
       const fetchedAuth = await loginApi(formData);
