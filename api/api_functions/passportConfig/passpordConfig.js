@@ -11,6 +11,7 @@ passport.use(
     // Here, you could optionally verify if the user exists in your database.
     // For simplicity, we'll just pass the payload through.
     // You could also add more logic here, such as verifying user roles or permissions.
+
     done(null, jwt_payload);
   })
 );

@@ -19,6 +19,7 @@ const sequelizeConn = new Sequelize(
   }
 );
 
+
 // async function testDatabaseConnection() {
 //   try {
 //     await sequelizeConn.authenticate();

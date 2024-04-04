@@ -41,7 +41,6 @@ router.get('/', async (req, res) => {
 
 router.post(
   '/',
-
   passport.authenticate('jwt', { session: false }),
   upload.single('imageArticle'),
   formUpload

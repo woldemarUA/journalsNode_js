@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 services:
   nginx:
     build:
@@ -34,7 +34,7 @@ services:
     depends_on:
       - db
     volumes:
-      - /home/M_10_a/api:/usr/src/app
+      - ${PROJECT_PATH}/api:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       - MYSQL_DB=${MYSQL_DB}
@@ -65,7 +65,7 @@ services:
     depends_on:
       - auth_db
     volumes:
-      - /home/M_10_a/auth:/usr/src/app
+      - ${PROJECT_PATH}/auth:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       - DATABASE_URL=postgres:// ${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
