@@ -1,5 +1,7 @@
 import { Server } from 'socket.io';
 
+import { botMessaging } from '../openAi/chatBot/bot';
+
 const io = new Server({
   cors: {
     origin: 'http://localhost:3000',
@@ -23,11 +25,10 @@ const io = new Server({
 });
 
 io.on('connection', (socket) => {
-  console.log('user connected');
   socket.on('greeting', ({ message }) => {
     // const message = response.message;
     // console.log(response.message);
-    socket.emit('responseGreeting', ` Hello from server ${message}`);
+    socket.emit('responseGreeting', message);
   });
 });
 
