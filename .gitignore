@@ -4,6 +4,7 @@
 .old
 /api/.env
 /auth/.env
+/mind/.env
 JWT.txt
 TASKS
 ### Node ###

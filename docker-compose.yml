@@ -18,6 +18,7 @@ services:
       - phpmyadmin
       - auth
       - pgadmin
+      - mind
       # - frontend
     networks:
       - journalsNode
@@ -29,6 +30,33 @@ services:
   #     - PUBLIC_URL=/frontend
   #   networks:
   #     - journalsNode
+  mind:
+    build: ./mind
+    depends_on:
+      - mind_db
+    volumes:
+      - ${PROJECT_PATH}/mind:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - OPEN_AI_API=${OPEN_API}
+      - POSTGRES_DB=${MIND_PG_DB}
+      - POSTGRES_USER=${MIND_PG_USER}
+      - POSTGRES_PASSWORD=${MIND_PG_PASSWORD}
+    networks:
+      - journalsNode
+
+  mind_db:
+    container_name: mind_db
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${MIND_PG_DB}
+      POSTGRES_USER: ${MIND_PG_USER}
+      POSTGRES_PASSWORD: ${MIND_PG_PASSWORD}
+    volumes:
+      - mind_pgdata:/var/lib/postgresql/data
+    networks:
+      - journalsNode
+
   api:
     build: ./api
     depends_on:
@@ -89,6 +117,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     depends_on:
       - auth_db
+      - mind_db
     networks:
       - journalsNode
 networks:
@@ -98,3 +127,4 @@ networks:
 volumes:
   dbdata:
   pgdata:
+  mind_pgdata:

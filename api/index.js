@@ -22,7 +22,6 @@ app.use(passport.initialize());
 // Enregistrement de la stratégie d'authentification
 require('./api_functions/passportConfig/passpordConfig');
 
-// Middleware pour analyser le corps des requêtes et servir des fichiers statiques
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static('public'));
