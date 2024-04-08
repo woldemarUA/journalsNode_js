@@ -1,0 +1,13 @@
+Profil de Compétence de Vladyslav Tymchenko
+Développement Web Full-Stack
+Outre ma maîtrise du développement front-end, je possède une expérience approfondie dans le développement full-stack, ayant réalisé deux projets significatifs :
+Application Web avec Chat en Temps Réel (PHP et Ratchet) : J'ai développé une application web complexe permettant le chat en temps réel et la gestion d'articles, mettant en œuvre PHP, WebSocket, et Ratchet. Ce projet souligne ma compétence en développement backend et en communications web en temps réel, intégrant des solutions de containerisation avec Docker.
+Plateforme Web Moderne pour la Gestion d'Articles (Node.js) : Ce projet avancé inclut des fonctionnalités d'authentification et de gestion de sessions utilisateurs, réalisé avec Node.js, Express, Sequelize, et Passport.js. En complément, j'ai développé le front-end en React pour assurer une interaction fluide avec tous les composants du système. Ceci démontre mes compétences en développement full-stack, l'intégration de diverses technologies pour créer une application web complète et sécurisée, et mon engagement envers les meilleures pratiques de développement et de sécurité web.
+Système d'Authentification et de Gestion des Utilisateurs (Angular avec Firebase) : Dans ce projet, j'ai mis en place un système complet d'authentification et de gestion des utilisateurs, en utilisant Angular pour le front-end et Firebase comme solution backend. Cette réalisation illustre ma capacité à développer des applications sécurisées et évolutives, en tirant parti de services cloud pour optimiser les performances et la gestion des données.
+Technologies & Outils
+Frontend : HTML, CSS, JavaScript, React, Bootstrap, Angular
+Backend : Node.js, Express, PHP, WebSocket, Ratchet
+Bases de données : MySQL, Sequelize, PDO, Postgres
+Outils et pratiques : Docker, MVC, manipulation du DOM, gestion des sessions
+Compétences Douces & Techniques
+Je combine une solide base technique avec des compétences douces essentielles comme la gestion de projet, la résolution de problèmes, et le travail en équipe. Mon expérience diversifiée me permet d'adopter une approche créative et analytique face aux défis, avec une capacité à communiquer efficacement et à collaborer dans des environnements multidisciplinaires.

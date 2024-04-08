@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import jwtDecode from 'jwt-decode';
+
 import { jwtDecode } from 'jwt-decode';
 import { loginApi, registerApi } from '../apiCalls/authCalls';
 import { fetchUsers } from '../apiCalls/userCalls';
@@ -97,8 +97,7 @@ export const UserProvider = ({ children }) => {
         register,
         setRefetchFlag,
         refetchFlag,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );

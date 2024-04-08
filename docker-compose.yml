@@ -38,7 +38,7 @@ services:
       - ${PROJECT_PATH}/mind:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - OPEN_AI_API=${OPEN_API}
+      - OPENAI_API_KEY=${OPEN_API}
       - POSTGRES_DB=${MIND_PG_DB}
       - POSTGRES_USER=${MIND_PG_USER}
       - POSTGRES_PASSWORD=${MIND_PG_PASSWORD}

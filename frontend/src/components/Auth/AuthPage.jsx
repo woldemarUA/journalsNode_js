@@ -3,7 +3,6 @@ import React, { useState } from 'react'; // Base de React et le hook useState po
 import { Alert } from 'react-bootstrap'; // Composant de React Bootstrap pour afficher des alertes
 import { AuthForm } from './AuthForm'; // Votre composant de formulaire personnalisé
 import { useUser } from '../../context/UserProvider';
-import { useNavigate } from 'react-router-dom';
 
 export const AuthPage = ({ formType }) => {
   // Définition du composant avec la prop `formType` pour déterminer la fonction du formulaire

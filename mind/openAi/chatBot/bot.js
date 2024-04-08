@@ -40,7 +40,6 @@ export const generateImage = async ({ prompt }) => {
       prompt,
     });
 
-    console.log('bot', response);
     return response.data;
   } catch (err) {
     throw err;

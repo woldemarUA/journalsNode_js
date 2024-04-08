@@ -16,9 +16,10 @@ export const useChat = () => useContext(ChatContext);
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const socketRef = useRef(null);
+
   useEffect(() => {
     socketRef.current = io(WS_PATH, { path: '/socket.io' });
-    // console.log(socketRef.current);
+
     socketRef.current.on('connect', () => {
       console.log('Connected to server');
 
@@ -28,7 +29,8 @@ export const ChatProvider = ({ children }) => {
     // Listen for the 'responseGreeting' event from the server
     socketRef.current.on('responseGreeting', (message) => {
       //   console.log('Received from server:', message);
-      setMessages((prevMessages) => [...prevMessages, message]);
+      //   setMessages((prevMessages) => [...prevMessages, ...message]); FOR CHAT WITH REAL USERS MAY BE NEED TO USE THIS (preserves the history)
+      setMessages([...message]);
     });
 
     // Cleanup on component unmount
